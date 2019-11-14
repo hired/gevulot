@@ -5,6 +5,8 @@
 Gevulot is a TCP proxy that sits between your PostgreSQL database and client and proxies data back and forth.
 It listens to all messages sent from database to the client and provides a mechanism for users to modify data in-transit and before received by the client. The main purpose of Gevulot is to mask personally identifiable information sent to clients.
 
+![image](docs/diagrams/gevulot_high_level_overview.svg)
+
 ## Usage
 
 To start the Gevulot:
