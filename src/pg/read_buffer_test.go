@@ -8,12 +8,12 @@ import (
 	is "gotest.tools/assert/cmp"
 )
 
-func TestLen(t *testing.T) {
+func TestReadBufferLen(t *testing.T) {
 	buf := make(ReadBuffer, 42)
 	assert.Equal(t, buf.Len(), 42)
 }
 
-func TestReadBytes(t *testing.T) {
+func TestReadBufferReadBytes(t *testing.T) {
 	buf := ReadBuffer{0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xE1, 0xDE, 0xAD}
 
 	// Regular read
@@ -30,7 +30,7 @@ func TestReadBytes(t *testing.T) {
 	assert.Equal(t, buf.Len(), 4) // buffer doesn't advance
 }
 
-func TestReadByte(t *testing.T) {
+func TestReadBufferReadByte(t *testing.T) {
 	buf := ReadBuffer{0xFF}
 
 	// Regular read
@@ -46,7 +46,7 @@ func TestReadByte(t *testing.T) {
 	assert.ErrorType(t, err, io.EOF)
 }
 
-func TestReadInt32(t *testing.T) {
+func TestReadBufferReadInt32(t *testing.T) {
 	buf := ReadBuffer{
 		// 31337 in Big-endian
 		0x0, 0x0, 0x7A, 0x69,
@@ -69,12 +69,12 @@ func TestReadInt32(t *testing.T) {
 	assert.Equal(t, buf.Len(), 2) // buffer doesn't advance
 }
 
-func TestReadInt16(t *testing.T) {
+func TestReadBufferReadInt16(t *testing.T) {
 	buf := ReadBuffer{
 		// 42 in Big-endian
 		0x0, 0x2A,
 
-		// 1 bytes — not enough for 16 bit integer
+		// 1 byte — not enough for 16 bit integer
 		0xFF,
 	}
 
@@ -92,7 +92,7 @@ func TestReadInt16(t *testing.T) {
 	assert.Equal(t, buf.Len(), 1) // buffer doesn't advance
 }
 
-func TestReadString(t *testing.T) {
+func TestReadBufferReadString(t *testing.T) {
 	buf := ReadBuffer{
 		'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', 0x00, // 12 bytes
 		'n', 'o', ' ', 't', 'e', 'r', 'm', 'i', 'n', 'a', 't', 'o', 'r', // 13 bytes
@@ -112,7 +112,7 @@ func TestReadString(t *testing.T) {
 	assert.Equal(t, buf.Len(), 13) // buffer doesn't advance
 }
 
-func TestReadInt32Array(t *testing.T) {
+func TestReadBufferReadInt32Array(t *testing.T) {
 	buf := ReadBuffer{
 		// 1, 2, 3, 4, 5, 6 in Big-endian
 		0x0, 0x0, 0x0, 0x1,
@@ -137,7 +137,7 @@ func TestReadInt32Array(t *testing.T) {
 	assert.Equal(t, buf.Len(), 4) // buffer doesn't advance
 }
 
-func TestReadInt16Array(t *testing.T) {
+func TestReadBufferReadInt16Array(t *testing.T) {
 	buf := ReadBuffer{
 		// 6, 5, 4, 3, 2, 1 in Big-endian
 		0x0, 0x6,
@@ -162,7 +162,7 @@ func TestReadInt16Array(t *testing.T) {
 	assert.Equal(t, buf.Len(), 2) // buffer doesn't advance
 }
 
-func TestInspect(t *testing.T) {
+func TestReadBufferInspect(t *testing.T) {
 	buf := ReadBuffer{0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xE1, 0xDE, 0xAD}
 	output := buf.Inspect()
 
