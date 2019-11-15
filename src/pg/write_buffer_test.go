@@ -17,14 +17,10 @@ func TestWriteBufferWriteBytes(t *testing.T) {
 
 	assert.Equal(t, buf.Len(), 0)
 
-	err := buf.WriteBytes([]byte{0xDE, 0xAD, 0xBE, 0xEF})
-
-	assert.NilError(t, err)
+	buf.WriteBytes([]byte{0xDE, 0xAD, 0xBE, 0xEF})
 	assert.DeepEqual(t, buf, WriteBuffer{0xDE, 0xAD, 0xBE, 0xEF})
 
-	err = buf.WriteBytes([]byte{0xFE, 0xE1, 0xDE, 0xAD})
-
-	assert.NilError(t, err)
+	buf.WriteBytes([]byte{0xFE, 0xE1, 0xDE, 0xAD})
 	assert.DeepEqual(t, buf, WriteBuffer{0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xE1, 0xDE, 0xAD})
 }
 
@@ -33,14 +29,10 @@ func TestWriteBufferWriteByte(t *testing.T) {
 
 	assert.Equal(t, buf.Len(), 0)
 
-	err := buf.WriteByte('A')
-
-	assert.NilError(t, err)
+	buf.WriteByte('A')
 	assert.DeepEqual(t, buf, WriteBuffer{'A'})
 
-	err = buf.WriteByte('B')
-
-	assert.NilError(t, err)
+	buf.WriteByte('B')
 	assert.DeepEqual(t, buf, WriteBuffer{'A', 'B'})
 }
 
@@ -49,14 +41,10 @@ func TestWriteBufferWriteInt32(t *testing.T) {
 
 	assert.Equal(t, buf.Len(), 0)
 
-	err := buf.WriteInt32(31337)
-
-	assert.NilError(t, err)
+	buf.WriteInt32(31337)
 	assert.DeepEqual(t, buf, WriteBuffer{0x00, 0x00, 0x7A, 0x69})
 
-	err = buf.WriteInt32(42)
-
-	assert.NilError(t, err)
+	buf.WriteInt32(42)
 	assert.DeepEqual(t, buf, WriteBuffer{
 		0x00, 0x00, 0x7A, 0x69, // 31337 in Big-endian
 		0x00, 0x00, 0x00, 0x2A, // 42 in Big-endian
@@ -68,14 +56,10 @@ func TestWriteBufferWriteInt16(t *testing.T) {
 
 	assert.Equal(t, buf.Len(), 0)
 
-	err := buf.WriteInt16(31337)
-
-	assert.NilError(t, err)
+	buf.WriteInt16(31337)
 	assert.DeepEqual(t, buf, WriteBuffer{0x7A, 0x69})
 
-	err = buf.WriteInt16(42)
-
-	assert.NilError(t, err)
+	buf.WriteInt16(42)
 	assert.DeepEqual(t, buf, WriteBuffer{
 		0x7A, 0x69, // 31337 in Big-endian
 		0x00, 0x2A, // 42 in Big-endian
@@ -87,14 +71,10 @@ func TestWriteBufferWriteString(t *testing.T) {
 
 	assert.Equal(t, buf.Len(), 0)
 
-	err := buf.WriteString("hello")
-
-	assert.NilError(t, err)
+	buf.WriteString("hello")
 	assert.DeepEqual(t, buf, WriteBuffer{'h', 'e', 'l', 'l', 'o', 0x00})
 
-	err = buf.WriteString("world")
-
-	assert.NilError(t, err)
+	buf.WriteString("world")
 	assert.DeepEqual(t, buf, WriteBuffer{
 		'h', 'e', 'l', 'l', 'o', 0x00,
 		'w', 'o', 'r', 'l', 'd', 0x00,
@@ -106,17 +86,13 @@ func TestWriteBufferWriteInt32Array(t *testing.T) {
 
 	assert.Equal(t, buf.Len(), 0)
 
-	err := buf.WriteInt32Array([]int32{31337, 42})
-
-	assert.NilError(t, err)
+	buf.WriteInt32Array([]int32{31337, 42})
 	assert.DeepEqual(t, buf, WriteBuffer{
 		0x00, 0x00, 0x7A, 0x69, // 31337 in Big-endian
 		0x00, 0x00, 0x00, 0x2A, // 42 in Big-endian
 	})
 
-	err = buf.WriteInt32Array([]int32{42, 31337})
-
-	assert.NilError(t, err)
+	buf.WriteInt32Array([]int32{42, 31337})
 	assert.DeepEqual(t, buf, WriteBuffer{
 		0x00, 0x00, 0x7A, 0x69,
 		0x00, 0x00, 0x00, 0x2A,
@@ -130,17 +106,13 @@ func TestWriteBufferWriteInt16Array(t *testing.T) {
 
 	assert.Equal(t, buf.Len(), 0)
 
-	err := buf.WriteInt16Array([]int16{31337, 42})
-
-	assert.NilError(t, err)
+	buf.WriteInt16Array([]int16{31337, 42})
 	assert.DeepEqual(t, buf, WriteBuffer{
 		0x7A, 0x69, // 31337 in Big-endian
 		0x00, 0x2A, // 42 in Big-endian
 	})
 
-	err = buf.WriteInt16Array([]int16{42, 31337})
-
-	assert.NilError(t, err)
+	buf.WriteInt16Array([]int16{42, 31337})
 	assert.DeepEqual(t, buf, WriteBuffer{
 		0x7A, 0x69,
 		0x00, 0x2A,
