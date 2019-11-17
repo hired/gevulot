@@ -20,7 +20,10 @@ type StartupMessageParameter struct {
 	Value string
 }
 
-// Marshall serializes the message to send over network.
+// Compile time check to make sure that StartupMessage implements the Message interface.
+var _ Message = &StartupMessage{}
+
+// Marshall serializes the message to send it over the network.
 func (m *StartupMessage) Marshall() ([]byte, error) {
 	var paramsBuffer WriteBuffer
 
