@@ -1,7 +1,7 @@
 package pg
 
-// SSLMagic is magic protocol version that client is using to request a SSL session.
-const SSLMagic = 80877103
+// SSLRequestMagic is magic protocol version that client is using to request a SSL session.
+const SSLRequestMagic = 80877103
 
 // DefaultProtocolVersion is a default protocol version of PostgreSQL since version 7
 const DefaultProtocolVersion = 196608

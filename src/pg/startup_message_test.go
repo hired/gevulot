@@ -1,8 +1,10 @@
 package pg
 
-import "testing"
+import (
+	"testing"
 
-import "gotest.tools/assert"
+	"gotest.tools/assert"
+)
 
 // Real SSL request packet from psql captured with Wireshark
 const GoldenSSLRequestMessagePacket = "\x00\x00\x00\x08\x04\xd2\x16\x2f"
@@ -23,7 +25,7 @@ const GoldenStartupMessagePacket = "\x00\x00\x00\x52\x00\x03\x00\x00\x75\x73\x65
 func TestStartupMessageMarshall(t *testing.T) {
 	// Test SSL request
 	msg := &StartupMessage{
-		ProtocolVersion: SSLMagic,
+		ProtocolVersion: SSLRequestMagic,
 	}
 
 	packet, err := msg.Marshall()
