@@ -8,6 +8,9 @@ test:
 build: clean
 	go build -o $(OUT) ./src
 
+lint:
+	golint -set_exit_status=1 ./...
+
 run: build
 	$(OUT)
 
