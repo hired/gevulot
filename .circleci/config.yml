@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run linter
+          name: Run linters
           command: make lint
 
   run_tests:
@@ -32,7 +32,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run linter
+          name: Run tests
           command: |
             mkdir -p $TEST_RESULTS
             trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/report.xml" EXIT
