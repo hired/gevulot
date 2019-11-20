@@ -47,7 +47,10 @@ jobs:
       - checkout
       - run:
           name: Run linter
-          command: make build
+          command: |
+            pwd
+            ls
+            make build
 
 executors:
   run_with_gevolut_ci_image:
