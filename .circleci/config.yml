@@ -39,7 +39,7 @@ jobs:
             make test VERBOSE=1 | tee ${TEST_RESULTS}/go-test.out
 
       - store_test_results:
-          path: $TEST_RESULTS
+          path: /tmp/test-results
 
   build:
     executor: run_with_gevolut_ci_image
