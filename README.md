@@ -29,6 +29,12 @@ For help:
 gevulot --help
 ```
 
+## Architecture
+
+CSP view:
+
+![image](docs/diagrams/gevulot_goroutines_architecture.svg)
+
 ## Configuration File Reference
 
 Gevolut uses [TOML](https://github.com/toml-lang/toml) format for its config.
