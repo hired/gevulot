@@ -36,7 +36,7 @@ jobs:
           command: |
             mkdir -p $TEST_RESULTS
             trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/report.xml" EXIT
-            make ci-test | tee ${TEST_RESULTS}/go-test.out
+            make test VERBOSE=1 | tee ${TEST_RESULTS}/go-test.out
 
       - store_test_results:
           path: $TEST_RESULTS
