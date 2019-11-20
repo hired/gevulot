@@ -5,6 +5,9 @@ default: build
 test:
 	go test ./src/...
 
+ci-test:
+	go test -race -v ./src/...
+
 build: clean
 	go build -o $(OUT) ./src
 
