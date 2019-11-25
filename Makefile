@@ -11,13 +11,13 @@ endif
 default: build
 
 test:
-	go test $(TEST_FLAGS) ./src/...
+	go test $(TEST_FLAGS) ./pkg/...
 
 build: clean
-	go build -o $(OUT) ./src
+	go build -o $(OUT) ./pkg/cmd/gevulot
 
 lint:
-	golint -set_exit_status=1 ./...
+	golint -set_exit_status=1 ./pkg/...
 
 run: build
 	$(OUT)
