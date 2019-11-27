@@ -2,6 +2,7 @@ package cli
 
 import (
 	"bytes"
+	"errors"
 	"regexp"
 	"strings"
 	"testing"
@@ -16,9 +17,8 @@ var (
 )
 
 func init() {
-	// Override STDOUT/STDERR
-	stdout = mockedStdout
-	stderr = mockedStderr
+	// Mock execution context
+	mockContext()
 
 	// Set build info
 	version = "1.0"
@@ -26,12 +26,22 @@ func init() {
 	buildDate = "10/29/1987"
 }
 
+func mockContext() {
+	currentContext = &cliContext{
+		stdout:    mockedStdout,
+		stderr:    mockedStderr,
+		runServer: func() error { return nil },
+	}
+}
+
 func cleanup() {
 	mockedStdout.Reset()
 	mockedStderr.Reset()
+	mockContext()
 }
 
-func TestRun(t *testing.T) {
+// NB: THIS MUST BE SEQUENTIAL!
+func TestCliRun(t *testing.T) {
 	defer cleanup()
 
 	// Regexp that represents an empty output
@@ -46,14 +56,34 @@ func TestRun(t *testing.T) {
 		{"--help", none, regexp.QuoteMeta("usage: gevulot")},
 	}
 
-	// NB: THIS MUST BE SEQUENTIAL!
 	for _, tc := range testCases {
-		err := Run(strings.Split(tc.input, " "))
+		args := strings.Split(tc.input, " ")
 
-		assert.NilError(t, err)
-		assert.Assert(t, cmp.Regexp(tc.expectedStdout, mockedStdout.String()))
-		assert.Assert(t, cmp.Regexp(tc.expectedStderr, mockedStderr.String()))
+		t.Run(tc.input, func(t *testing.T) {
+			defer cleanup()
 
-		cleanup()
+			err := Run(args)
+
+			assert.NilError(t, err)
+			assert.Assert(t, cmp.Regexp(tc.expectedStdout, mockedStdout.String()))
+			assert.Assert(t, cmp.Regexp(tc.expectedStderr, mockedStderr.String()))
+		})
 	}
+
+	t.Run("run server", func(t *testing.T) {
+		defer cleanup()
+
+		handlerCalled := false
+		serverError := errors.New("server error")
+
+		currentContext.runServer = func() error {
+			handlerCalled = true
+			return serverError
+		}
+
+		err := Run(nil)
+
+		assert.Equal(t, true, handlerCalled, "Run starts the server")
+		assert.Equal(t, err, serverError, "Run propogates server error")
+	})
 }

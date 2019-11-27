@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/hired/gevulot/pkg/server"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -18,15 +19,33 @@ var (
 	buildDate  string = "<unknown>"
 )
 
-// Default STDOUT/STDERR for console messages; we override this in tests
-var stdout io.Writer = os.Stdout
-var stderr io.Writer = os.Stderr
-
 // cliArgs contains user provided arguments and flags.
 type cliArgs struct {
 	// Path to the config
 	configPath string
 }
+
+// cliContext contains the global state for CLI.
+type cliContext struct {
+	// Standard output stream for console messages.
+	stdout io.Writer
+
+	// Standard error stream for console messages.
+	stderr io.Writer
+
+	// runServer starts the Gevulot.
+	runServer func() error
+}
+
+// Default execution context.
+var defaultContext = &cliContext{
+	stdout:    os.Stdout,
+	stderr:    os.Stderr,
+	runServer: server.Run,
+}
+
+// Current execution context; we override this in tests.
+var currentContext = defaultContext
 
 // parseArgs parses CLI arguments.
 func parseArgs(args []string) (*cliArgs, error) {
@@ -38,7 +57,7 @@ func parseArgs(args []string) (*cliArgs, error) {
 	app.Terminate(nil)
 
 	// Write output to stderr
-	app.Writer(stderr)
+	app.Writer(currentContext.stderr)
 
 	// Add --version flag with to display build info
 	app.Version(fmt.Sprintf("%s version %s (%s) built on %s", appName, version, commitHash, buildDate))
@@ -65,5 +84,5 @@ func Run(args []string) error {
 		return err
 	}
 
-	return nil
+	return currentContext.runServer()
 }
