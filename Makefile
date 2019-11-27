@@ -14,7 +14,7 @@ test:
 	go test $(TEST_FLAGS) ./pkg/...
 
 build: clean
-	go build -o $(OUT) ./pkg/cmd/gevulot
+	go build -o $(OUT) .
 
 lint:
 	golint -set_exit_status=1 ./pkg/...
