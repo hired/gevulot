@@ -76,13 +76,21 @@ func parseArgs(args []string) (*cliArgs, error) {
 	return parsedArgs, nil
 }
 
-// Run executes gevulot using given CLI args.
-func Run(args []string) error {
+// Run executes gevulot using given CLI args. The function returns program exit code.
+func Run(args []string) (exitCode int) {
 	_, err := parseArgs(args)
 
 	if err != nil {
-		return err
+		fmt.Fprintf(currentContext.stderr, "%v\n", err)
+		exitCode = 1
 	}
 
-	return currentContext.runServer()
+	err = currentContext.runServer()
+
+	if err != nil {
+		fmt.Fprintf(currentContext.stderr, "server error: %v\n", err)
+		exitCode = 1
+	}
+
+	return
 }

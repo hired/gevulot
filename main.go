@@ -9,11 +9,9 @@ import (
 // main is the entrypoint of Gevulot.
 func main() {
 	// All logic lives in the cli package
-	err := cli.Run(os.Args[1:])
+	exitCode := cli.Run(os.Args[1:])
 
-	if err != nil {
-		// NB: this is THE ONLY PLACE where we exit from the program abnormaly
-		// DO NOT USE os.Exit!
-		os.Exit(1)
-	}
+	// NB: this is THE ONLY PLACE where we exit from the program
+	// DO NOT USE os.Exit ANYWHERE ELSE!
+	os.Exit(exitCode)
 }
