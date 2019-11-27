@@ -2,7 +2,7 @@ package cli
 
 import (
 	"bytes"
-	"errors"
+	"io"
 	"regexp"
 	"strings"
 	"testing"
@@ -71,20 +71,43 @@ func TestCliRun(t *testing.T) {
 		})
 	}
 
-	t.Run("run server (success)", func(t *testing.T) {
+	t.Run("starts the server", func(t *testing.T) {
 		defer cleanup()
 
 		handlerCalled := false
-		serverError := errors.New("failure")
 
 		currentContext.runServer = func() error {
 			handlerCalled = true
-			return serverError
+			return nil
 		}
 
 		Run(nil)
 
 		assert.Equal(t, handlerCalled, true, "Run starts the server")
-		assert.Equal(t, mockedStderr.String(), "server error: failure\n", "Run prints server error")
+	})
+
+	t.Run("exit code when there is a server error", func(t *testing.T) {
+		defer cleanup()
+
+		currentContext.runServer = func() error {
+			return io.EOF
+		}
+
+		exitCode := Run(nil)
+
+		assert.Equal(t, mockedStderr.String(), "server error: EOF\n", "Run prints server error")
+		assert.Equal(t, exitCode, 1, "Run returns non-zero exit code")
+	})
+
+	t.Run("exit code when server exited without error", func(t *testing.T) {
+		defer cleanup()
+
+		currentContext.runServer = func() error {
+			return nil
+		}
+
+		exitCode := Run(nil)
+
+		assert.Equal(t, exitCode, 0, "Run returns zero exit code")
 	})
 }
