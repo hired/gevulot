@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/hired/gevulot/pkg/server"
+	"github.com/sirupsen/logrus"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -34,7 +35,7 @@ type cliContext struct {
 	stderr io.Writer
 
 	// runServer starts the Gevulot.
-	runServer func() error
+	runServer func(log server.Logger, configChan <-chan server.Config) error
 }
 
 // Default execution context.
@@ -76,6 +77,13 @@ func parseArgs(args []string) (*cliArgs, error) {
 	return parsedArgs, nil
 }
 
+func configureLogger() *logrus.Logger {
+	logger := logrus.New()
+	logger.Out = currentContext.stdout
+
+	return logger
+}
+
 // Run executes gevulot using given CLI args. The function returns program exit code.
 func Run(args []string) (exitCode int) {
 	_, err := parseArgs(args)
@@ -85,7 +93,10 @@ func Run(args []string) (exitCode int) {
 		exitCode = 1
 	}
 
-	err = currentContext.runServer()
+	log := configureLogger()
+
+	configChan := make(chan server.Config, 1)
+	err = currentContext.runServer(log, configChan)
 
 	if err != nil {
 		fmt.Fprintf(currentContext.stderr, "server error: %v\n", err)

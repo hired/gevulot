@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"gotest.tools/assert"
-	"gotest.tools/assert/cmp"
+	"github.com/hired/gevulot/pkg/server"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -30,7 +30,7 @@ func mockContext() {
 	currentContext = &cliContext{
 		stdout:    mockedStdout,
 		stderr:    mockedStderr,
-		runServer: func() error { return nil },
+		runServer: func(_ server.Logger, _ <-chan server.Config) error { return nil },
 	}
 }
 
@@ -49,8 +49,8 @@ func TestCliRun(t *testing.T) {
 
 	testCases := []struct {
 		input            string
-		expectedStdout   cmp.RegexOrPattern
-		expectedStderr   cmp.RegexOrPattern
+		expectedStdout   string
+		expectedStderr   string
 		expectedExitCode int
 	}{
 		{"--version", none, regexp.QuoteMeta("gevulot version 1.0 (deadbeef) built on 10/29/1987"), 0},
@@ -66,8 +66,8 @@ func TestCliRun(t *testing.T) {
 			exitCode := Run(args)
 
 			assert.Equal(t, exitCode, tc.expectedExitCode)
-			assert.Assert(t, cmp.Regexp(tc.expectedStdout, mockedStdout.String()))
-			assert.Assert(t, cmp.Regexp(tc.expectedStderr, mockedStderr.String()))
+			assert.Regexp(t, tc.expectedStdout, mockedStdout.String())
+			assert.Regexp(t, tc.expectedStderr, mockedStderr.String())
 		})
 	}
 
@@ -76,7 +76,7 @@ func TestCliRun(t *testing.T) {
 
 		handlerCalled := false
 
-		currentContext.runServer = func() error {
+		currentContext.runServer = func(_ server.Logger, _ <-chan server.Config) error {
 			handlerCalled = true
 			return nil
 		}
@@ -89,7 +89,7 @@ func TestCliRun(t *testing.T) {
 	t.Run("exit code when there is a server error", func(t *testing.T) {
 		defer cleanup()
 
-		currentContext.runServer = func() error {
+		currentContext.runServer = func(_ server.Logger, _ <-chan server.Config) error {
 			return io.EOF
 		}
 
@@ -102,12 +102,25 @@ func TestCliRun(t *testing.T) {
 	t.Run("exit code when server exited without error", func(t *testing.T) {
 		defer cleanup()
 
-		currentContext.runServer = func() error {
+		currentContext.runServer = func(_ server.Logger, _ <-chan server.Config) error {
 			return nil
 		}
 
 		exitCode := Run(nil)
 
 		assert.Equal(t, exitCode, 0, "Run returns zero exit code")
+	})
+
+	t.Run("provides logger instance", func(t *testing.T) {
+		defer cleanup()
+
+		currentContext.runServer = func(log server.Logger, _ <-chan server.Config) error {
+			log.Info("logger is working!")
+			return nil
+		}
+
+		Run(nil)
+
+		assert.Contains(t, mockedStdout.String(), "logger is working!", "Run prints log message")
 	})
 }
