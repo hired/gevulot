@@ -22,6 +22,12 @@ var (
 
 // cliArgs contains user provided arguments and flags.
 type cliArgs struct {
+	// True when user asked for the CLI help
+	isHelp bool
+
+	// True when user asked for the app version
+	isVersion bool
+
 	// Path to the config
 	configPath string
 }
@@ -66,7 +72,12 @@ func parseArgs(args []string) (*cliArgs, error) {
 	app.Flag("config", "Set the configuration file path").
 		Short('c').
 		PlaceHolder("PATH").
+		Default("gevulot.toml").
 		StringVar(&parsedArgs.configPath)
+
+	// Expose --help and --version flags to our struct
+	app.HelpFlag.BoolVar(&parsedArgs.isHelp)
+	app.VersionFlag.BoolVar(&parsedArgs.isHelp)
 
 	_, err := app.Parse(args)
 
@@ -86,11 +97,16 @@ func configureLogger() *logrus.Logger {
 
 // Run executes gevulot using given CLI args. The function returns program exit code.
 func Run(args []string) (exitCode int) {
-	_, err := parseArgs(args)
+	flags, err := parseArgs(args)
 
 	if err != nil {
 		fmt.Fprintf(currentContext.stderr, "%v\n", err)
 		exitCode = 1
+	}
+
+	if flags.isHelp || flags.isVersion {
+		exitCode = 0
+		return
 	}
 
 	log := configureLogger()
@@ -101,6 +117,7 @@ func Run(args []string) (exitCode int) {
 	if err != nil {
 		fmt.Fprintf(currentContext.stderr, "server error: %v\n", err)
 		exitCode = 1
+		return
 	}
 
 	return
