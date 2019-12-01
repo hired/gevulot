@@ -20,6 +20,17 @@ var (
 	buildDate  string = "<unknown>"
 )
 
+type cli struct {
+	// Standard output stream for console messages.
+	stdout io.Writer
+
+	// Standard error stream for console messages.
+	stderr io.Writer
+
+	// runServer starts the Gevulot server.
+	runServer func(configChan <-chan *server.Config) error
+}
+
 // cliArgs contains user provided arguments and flags.
 type cliArgs struct {
 	// True when user asked for the CLI help
@@ -32,30 +43,8 @@ type cliArgs struct {
 	configPath string
 }
 
-// cliContext contains the global state for CLI.
-type cliContext struct {
-	// Standard output stream for console messages.
-	stdout io.Writer
-
-	// Standard error stream for console messages.
-	stderr io.Writer
-
-	// runServer starts the Gevulot.
-	runServer func(configChan <-chan *server.Config) error
-}
-
-// Default execution context.
-var defaultContext = &cliContext{
-	stdout:    os.Stdout,
-	stderr:    os.Stderr,
-	runServer: server.Run,
-}
-
-// Current execution context; we override this in tests.
-var currentContext = defaultContext
-
 // parseArgs parses CLI arguments.
-func parseArgs(args []string) (*cliArgs, error) {
+func (c *cli) parseArgs(args []string) (*cliArgs, error) {
 	parsedArgs := &cliArgs{}
 
 	app := kingpin.New(appName, "")
@@ -64,11 +53,12 @@ func parseArgs(args []string) (*cliArgs, error) {
 	app.Terminate(nil)
 
 	// Write output to stderr
-	app.Writer(currentContext.stderr)
+	app.Writer(c.stderr)
 
 	// Add --version flag with to display build info
 	app.Version(fmt.Sprintf("%s version %s (%s) built on %s", appName, version, commitHash, buildDate))
 
+	// Add --config flag to specify path to the config
 	app.Flag("config", "Set the configuration file path").
 		Short('c').
 		PlaceHolder("PATH").
@@ -88,11 +78,11 @@ func parseArgs(args []string) (*cliArgs, error) {
 	return parsedArgs, nil
 }
 
-func configureLogger() {
-	log.SetOutput(currentContext.stdout)
+func (c *cli) configureLogger() {
+	log.SetOutput(c.stdout)
 }
 
-func prepareConfigChan(configPath string) (<-chan *server.Config, error) {
+func (c *cli) prepareConfigChan(configPath string) (<-chan *server.Config, error) {
 	config, err := readServerConfig(configPath)
 
 	if err != nil {
@@ -123,13 +113,13 @@ func prepareConfigChan(configPath string) (<-chan *server.Config, error) {
 	return configChan, nil
 }
 
-// Run executes gevulot using given CLI args. The function returns program exit code.
-func Run(args []string) (exitCode int) {
+// Run handles CLI for Gevulot server and returns exit code.
+func (c *cli) Run(args []string) (exitCode int) {
 	// Parse CLI args and flags
-	flags, err := parseArgs(args)
+	flags, err := c.parseArgs(args)
 
 	if err != nil {
-		fmt.Fprintf(currentContext.stderr, "%v\n", err)
+		fmt.Fprintf(c.stderr, "%v\n", err)
 		exitCode = 1
 	}
 
@@ -140,25 +130,38 @@ func Run(args []string) (exitCode int) {
 	}
 
 	// Setup logrus
-	configureLogger()
+	c.configureLogger()
 
 	// Load config
-	configChan, err := prepareConfigChan(flags.configPath)
+	configChan, err := c.prepareConfigChan(flags.configPath)
 
 	if err != nil {
-		fmt.Fprintf(currentContext.stderr, "failed to load config: %v\n", err)
+		fmt.Fprintf(c.stderr, "failed to load config: %v\n", err)
 		exitCode = 1
 		return
 	}
 
 	// Run the server (this is blocking call)
-	err = currentContext.runServer(configChan)
+	err = c.runServer(configChan)
 
 	if err != nil {
-		fmt.Fprintf(currentContext.stderr, "server error: %v\n", err)
+		fmt.Fprintf(c.stderr, "server error: %v\n", err)
 		exitCode = 1
 		return
 	}
 
 	return
+}
+
+// Run handles CLI for Gevulot server and returns exit code.
+// This is the only publicly exposed entry point for the cli package.
+func Run(args []string) int {
+	// Initialize new instance with default STDERR/STDOUT
+	cli := &cli{
+		stdout:    os.Stdout,
+		stderr:    os.Stderr,
+		runServer: server.Run, // late binding to imrove testability
+	}
+
+	return cli.Run(args)
 }

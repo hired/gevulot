@@ -11,39 +11,23 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var (
-	mockedStdout = &bytes.Buffer{}
-	mockedStderr = &bytes.Buffer{}
-)
-
 func init() {
-	// Mock execution context
-	mockContext()
-
 	// Set build info
 	version = "1.0"
 	commitHash = "deadbeef"
 	buildDate = "10/29/1987"
 }
 
-func mockContext() {
-	currentContext = &cliContext{
-		stdout:    mockedStdout,
-		stderr:    mockedStderr,
+func mockedCli(stdout, stderr io.Writer) *cli {
+	return &cli{
+		stdout:    stdout,
+		stderr:    stderr,
 		runServer: func(_ <-chan *server.Config) error { return nil },
 	}
 }
 
-func cleanup() {
-	mockedStdout.Reset()
-	mockedStderr.Reset()
-	mockContext()
-}
-
 // NB: THIS MUST BE SEQUENTIAL!
 func TestCliRun(t *testing.T) {
-	defer cleanup()
-
 	// Regexp that represents an empty output
 	none := "^$"
 
@@ -61,9 +45,11 @@ func TestCliRun(t *testing.T) {
 		args := strings.Split(tc.input, " ")
 
 		t.Run(tc.input, func(t *testing.T) {
-			defer cleanup()
+			mockedStdout := &bytes.Buffer{}
+			mockedStderr := &bytes.Buffer{}
 
-			exitCode := Run(args)
+			cli := mockedCli(mockedStdout, mockedStderr)
+			exitCode := cli.Run(args)
 
 			assert.Equal(t, exitCode, tc.expectedExitCode)
 			assert.Regexp(t, tc.expectedStdout, mockedStdout.String())
@@ -72,41 +58,40 @@ func TestCliRun(t *testing.T) {
 	}
 
 	t.Run("starts the server", func(t *testing.T) {
-		defer cleanup()
-
 		handlerCalled := false
 
-		currentContext.runServer = func(_ <-chan *server.Config) error {
+		cli := mockedCli(nil, nil)
+		cli.runServer = func(_ <-chan *server.Config) error {
 			handlerCalled = true
 			return nil
 		}
 
-		Run([]string{"--config=testdata/example.toml"})
+		cli.Run([]string{"--config=testdata/example.toml"})
 
 		assert.Equal(t, handlerCalled, true, "Run starts the server")
 	})
 
 	t.Run("exit code when there is a server error", func(t *testing.T) {
-		defer cleanup()
+		mockedStderr := &bytes.Buffer{}
 
-		currentContext.runServer = func(_ <-chan *server.Config) error {
+		cli := mockedCli(nil, mockedStderr)
+		cli.runServer = func(_ <-chan *server.Config) error {
 			return io.EOF
 		}
 
-		exitCode := Run([]string{"--config=testdata/example.toml"})
+		exitCode := cli.Run([]string{"--config=testdata/example.toml"})
 
 		assert.Equal(t, mockedStderr.String(), "server error: EOF\n", "Run prints server error")
 		assert.Equal(t, exitCode, 1, "Run returns non-zero exit code")
 	})
 
 	t.Run("exit code when server exited without error", func(t *testing.T) {
-		defer cleanup()
-
-		currentContext.runServer = func(_ <-chan *server.Config) error {
+		cli := mockedCli(nil, nil)
+		cli.runServer = func(_ <-chan *server.Config) error {
 			return nil
 		}
 
-		exitCode := Run([]string{"--config=testdata/example.toml"})
+		exitCode := cli.Run([]string{"--config=testdata/example.toml"})
 
 		assert.Equal(t, exitCode, 0, "Run returns zero exit code")
 	})
