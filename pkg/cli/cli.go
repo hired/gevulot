@@ -41,7 +41,7 @@ type cliContext struct {
 	stderr io.Writer
 
 	// runServer starts the Gevulot.
-	runServer func(log server.Logger, configChan <-chan server.Config) error
+	runServer func(log server.Logger, configChan <-chan *server.Config) error
 }
 
 // Default execution context.
@@ -95,6 +95,37 @@ func configureLogger() *logrus.Logger {
 	return logger
 }
 
+func prepareConfigChan(configPath string, log *logrus.Logger) (<-chan *server.Config, error) {
+	config, err := readServerConfig(configPath)
+
+	if err != nil {
+		return nil, err
+	}
+
+	configChan := make(chan *server.Config, 1)
+	configChan <- config
+
+	watcher := newFileWatcher(configPath)
+	watcher.OnWrite = func() {
+		updatedConfig, err := readServerConfig(configPath)
+
+		if err != nil {
+			log.Errorf("error loading config file %s: %v", configPath, err)
+			return
+		}
+
+		configChan <- updatedConfig
+	}
+
+	err = watcher.Watch()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return configChan, nil
+}
+
 // Run executes gevulot using given CLI args. The function returns program exit code.
 func Run(args []string) (exitCode int) {
 	flags, err := parseArgs(args)
@@ -111,7 +142,14 @@ func Run(args []string) (exitCode int) {
 
 	log := configureLogger()
 
-	configChan := make(chan server.Config, 1)
+	configChan, err := prepareConfigChan(flags.configPath, log)
+
+	if err != nil {
+		fmt.Fprintf(currentContext.stderr, "%v\n", err)
+		exitCode = 1
+		return
+	}
+
 	err = currentContext.runServer(log, configChan)
 
 	if err != nil {
