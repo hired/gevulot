@@ -13,7 +13,7 @@ func Run(args []string) int {
 	cli := &cli{
 		stdout:    os.Stdout,
 		stderr:    os.Stderr,
-		runServer: server.Run, // late binding to imrove testability
+		runServer: server.Run, // late binding to improve testability
 	}
 
 	return cli.Run(args)
