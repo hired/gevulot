@@ -125,6 +125,7 @@ func prepareConfigChan(configPath string) (<-chan *server.Config, error) {
 
 // Run executes gevulot using given CLI args. The function returns program exit code.
 func Run(args []string) (exitCode int) {
+	// Parse CLI args and flags
 	flags, err := parseArgs(args)
 
 	if err != nil {
@@ -132,21 +133,25 @@ func Run(args []string) (exitCode int) {
 		exitCode = 1
 	}
 
+	// Exit immediately if user asked for a help or an app version
 	if flags.isHelp || flags.isVersion {
 		exitCode = 0
 		return
 	}
 
+	// Setup logrus
 	configureLogger()
 
+	// Load config
 	configChan, err := prepareConfigChan(flags.configPath)
 
 	if err != nil {
-		fmt.Fprintf(currentContext.stderr, "%v\n", err)
+		fmt.Fprintf(currentContext.stderr, "failed to load config: %v\n", err)
 		exitCode = 1
 		return
 	}
 
+	// Run the server (this is blocking call)
 	err = currentContext.runServer(configChan)
 
 	if err != nil {
