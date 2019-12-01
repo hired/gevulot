@@ -91,19 +91,7 @@ func (c *cli) prepareConfigChan(configPath string) (<-chan *server.Config, error
 	configChan := make(chan *server.Config, 1)
 	configChan <- config
 
-	watcher := newFileWatcher(configPath)
-	watcher.OnWrite = func() {
-		updatedConfig, err := readServerConfig(configPath)
-
-		if err != nil {
-			log.Errorf("error loading config file %s: %v", configPath, err)
-			return
-		}
-
-		configChan <- updatedConfig
-	}
-
-	err = watcher.Watch()
+	err = watchServerConfig(configPath, configChan)
 
 	if err != nil {
 		return nil, err
