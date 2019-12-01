@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/hired/gevulot/pkg/server"
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -41,7 +41,7 @@ type cliContext struct {
 	stderr io.Writer
 
 	// runServer starts the Gevulot.
-	runServer func(log server.Logger, configChan <-chan *server.Config) error
+	runServer func(configChan <-chan *server.Config) error
 }
 
 // Default execution context.
@@ -88,14 +88,11 @@ func parseArgs(args []string) (*cliArgs, error) {
 	return parsedArgs, nil
 }
 
-func configureLogger() *logrus.Logger {
-	logger := logrus.New()
-	logger.Out = currentContext.stdout
-
-	return logger
+func configureLogger() {
+	log.SetOutput(currentContext.stdout)
 }
 
-func prepareConfigChan(configPath string, log *logrus.Logger) (<-chan *server.Config, error) {
+func prepareConfigChan(configPath string) (<-chan *server.Config, error) {
 	config, err := readServerConfig(configPath)
 
 	if err != nil {
@@ -140,9 +137,9 @@ func Run(args []string) (exitCode int) {
 		return
 	}
 
-	log := configureLogger()
+	configureLogger()
 
-	configChan, err := prepareConfigChan(flags.configPath, log)
+	configChan, err := prepareConfigChan(flags.configPath)
 
 	if err != nil {
 		fmt.Fprintf(currentContext.stderr, "%v\n", err)
@@ -150,7 +147,7 @@ func Run(args []string) (exitCode int) {
 		return
 	}
 
-	err = currentContext.runServer(log, configChan)
+	err = currentContext.runServer(configChan)
 
 	if err != nil {
 		fmt.Fprintf(currentContext.stderr, "server error: %v\n", err)

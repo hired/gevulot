@@ -1,7 +1,11 @@
 package server
 
+import (
+	log "github.com/sirupsen/logrus"
+)
+
 // Run starts the PG proxy server.
-func Run(log Logger, configChan <-chan *Config) error {
+func Run(configChan <-chan *Config) error {
 	for {
 		select {
 		case config := <-configChan:

@@ -30,7 +30,7 @@ func mockContext() {
 	currentContext = &cliContext{
 		stdout:    mockedStdout,
 		stderr:    mockedStderr,
-		runServer: func(_ server.Logger, _ <-chan *server.Config) error { return nil },
+		runServer: func(_ <-chan *server.Config) error { return nil },
 	}
 }
 
@@ -76,7 +76,7 @@ func TestCliRun(t *testing.T) {
 
 		handlerCalled := false
 
-		currentContext.runServer = func(_ server.Logger, _ <-chan *server.Config) error {
+		currentContext.runServer = func(_ <-chan *server.Config) error {
 			handlerCalled = true
 			return nil
 		}
@@ -89,7 +89,7 @@ func TestCliRun(t *testing.T) {
 	t.Run("exit code when there is a server error", func(t *testing.T) {
 		defer cleanup()
 
-		currentContext.runServer = func(_ server.Logger, _ <-chan *server.Config) error {
+		currentContext.runServer = func(_ <-chan *server.Config) error {
 			return io.EOF
 		}
 
@@ -102,25 +102,12 @@ func TestCliRun(t *testing.T) {
 	t.Run("exit code when server exited without error", func(t *testing.T) {
 		defer cleanup()
 
-		currentContext.runServer = func(_ server.Logger, _ <-chan *server.Config) error {
+		currentContext.runServer = func(_ <-chan *server.Config) error {
 			return nil
 		}
 
 		exitCode := Run([]string{"--config=testdata/example.toml"})
 
 		assert.Equal(t, exitCode, 0, "Run returns zero exit code")
-	})
-
-	t.Run("provides logger instance", func(t *testing.T) {
-		defer cleanup()
-
-		currentContext.runServer = func(log server.Logger, _ <-chan *server.Config) error {
-			log.Info("logger is working!")
-			return nil
-		}
-
-		Run([]string{"--config=testdata/example.toml"})
-
-		assert.Contains(t, mockedStdout.String(), "logger is working!", "Run prints log message")
 	})
 }
