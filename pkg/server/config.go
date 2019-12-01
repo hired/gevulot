@@ -7,5 +7,5 @@ type Config struct {
 	Listen string
 
 	// Database connection string for the proxied PostgreSQL server.
-	DatabaseURL string
+	DatabaseURL string `toml:"database-url"`
 }
