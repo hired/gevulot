@@ -1,10 +1,10 @@
 package cli
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/fsnotify/fsnotify"
+	log "github.com/sirupsen/logrus"
 )
 
 // fileWatcher watches given file path, delivering FS events via the callbacks.
@@ -120,7 +120,7 @@ func (w *fileWatcher) Watch() error {
 		// We are not in the context of calling goroutine anymore so we cannot just return error
 		// and have to print the error by ourselves.
 		if watcherError != nil {
-			fmt.Printf("config watcher error: %v\n", err)
+			log.Errorf("file watcher error: %v\n", err)
 		}
 	}()
 
