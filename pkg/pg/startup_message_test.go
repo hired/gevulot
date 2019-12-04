@@ -22,13 +22,13 @@ const GoldenStartupMessagePacket = "\x00\x00\x00\x52\x00\x03\x00\x00\x75\x73\x65
 	"\x6e\x74\x5f\x65\x6e\x63\x6f\x64\x69\x6e\x67\x00\x55\x54\x46\x38" +
 	"\x00\x00"
 
-func TestStartupMessageMarshall(t *testing.T) {
+func TestStartupMessageMarshal(t *testing.T) {
 	// Test SSL request
 	msg := &StartupMessage{
 		ProtocolVersion: SSLRequestMagic,
 	}
 
-	packet, err := msg.Marshall()
+	packet, err := msg.Marshal()
 
 	assert.NoError(t, err)
 	assert.Equal(t, packet, []byte(GoldenSSLRequestMessagePacket))
@@ -44,7 +44,7 @@ func TestStartupMessageMarshall(t *testing.T) {
 		},
 	}
 
-	packet, err = msg.Marshall()
+	packet, err = msg.Marshal()
 
 	assert.NoError(t, err)
 	assert.Equal(t, packet, []byte(GoldenStartupMessagePacket))

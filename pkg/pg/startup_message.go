@@ -23,8 +23,8 @@ type StartupMessageParameter struct {
 // Compile time check to make sure that StartupMessage implements the Message interface.
 var _ Message = &StartupMessage{}
 
-// Marshall serializes the message to send it over the network.
-func (m *StartupMessage) Marshall() ([]byte, error) {
+// Marshal serializes the message to send it over the network.
+func (m *StartupMessage) Marshal() ([]byte, error) {
 	var paramsBuffer WriteBuffer
 
 	// Dictionary is encoded as string key-value pair + ending /0x00
