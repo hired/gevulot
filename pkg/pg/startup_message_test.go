@@ -3,7 +3,7 @@ package pg
 import (
 	"testing"
 
-	"gotest.tools/assert"
+	"github.com/stretchr/testify/assert"
 )
 
 // Real SSL request packet from psql captured with Wireshark
@@ -30,8 +30,8 @@ func TestStartupMessageMarshall(t *testing.T) {
 
 	packet, err := msg.Marshall()
 
-	assert.NilError(t, err)
-	assert.DeepEqual(t, packet, []byte(GoldenSSLRequestMessagePacket))
+	assert.NoError(t, err)
+	assert.Equal(t, packet, []byte(GoldenSSLRequestMessagePacket))
 
 	// Test regular start up
 	msg = &StartupMessage{
@@ -46,6 +46,6 @@ func TestStartupMessageMarshall(t *testing.T) {
 
 	packet, err = msg.Marshall()
 
-	assert.NilError(t, err)
-	assert.DeepEqual(t, packet, []byte(GoldenStartupMessagePacket))
+	assert.NoError(t, err)
+	assert.Equal(t, packet, []byte(GoldenStartupMessagePacket))
 }
