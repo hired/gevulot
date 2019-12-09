@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-// StartupFrame incapsulates a StartupMessage — the first message a client sends to begin a session with a DB.
+// StartupFrame conveys StartupMessage — the first message a client sends to begin a session with a DB.
 // The only difference between a StandardFrame and a StartupFrame is that the latter doesn't have a message type
 // as the first byte of the frame header. It is exist in PG protocol for historical reason.
 type StartupFrame []byte
@@ -46,8 +46,8 @@ func ReadStartupFrame(r io.Reader) (StartupFrame, error) {
 	// Grow the buffer to reduce memory allocations
 	buffer.Grow(256)
 
-	// Read 4 bytes of frame header
-	_, err := io.CopyN(buffer, r, 4)
+	// Read frame header
+	_, err := io.CopyN(buffer, r, 4) // 4 bytes of message length
 
 	if err != nil {
 		return nil, err
