@@ -57,7 +57,11 @@ func ReadStandardFrame(r io.Reader) (StandardFrame, error) {
 	frameHeader := ReadBuffer(buffer.Bytes())
 
 	// Skip the first byte
-	frameHeader.ReadByte()
+	_, err = frameHeader.ReadByte()
+
+	if err != nil {
+		return nil, err
+	}
 
 	// Get the message length
 	frameLength, err := frameHeader.ReadInt32()

@@ -48,6 +48,6 @@ func TestReadStandardFrame(t *testing.T) {
 	assert.Equal(t, []byte("hello"), frame.MessageBody())
 
 	// Test IO error
-	frame, err = ReadStandardFrame(r) // r is empty
+	_, err = ReadStandardFrame(r) // r is empty
 	assert.Equal(t, io.EOF, err)
 }

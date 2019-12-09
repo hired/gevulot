@@ -16,8 +16,8 @@ func TestConnRecvStartupMessage(t *testing.T) {
 	go func() {
 		_, err := server.Write([]byte(GoldenStartupMessagePacket))
 
-		if !assert.NoError(t, err) {
-			t.FailNow()
+		if err != nil {
+			panic(err)
 		}
 	}()
 
@@ -42,14 +42,14 @@ func TestConnRecvMessage(t *testing.T) {
 
 		frame, err := msg.Frame()
 
-		if !assert.NoError(t, err) {
-			t.FailNow()
+		if err != nil {
+			panic(err)
 		}
 
 		_, err = server.Write(frame.Bytes())
 
-		if !assert.NoError(t, err) {
-			t.FailNow()
+		if err != nil {
+			panic(err)
 		}
 	}()
 
@@ -81,8 +81,8 @@ func TestConnSendMessage(t *testing.T) {
 		pgConn := NewConn(client)
 		err := pgConn.SendMessage(msg)
 
-		if !assert.NoError(t, err) {
-			t.FailNow()
+		if err != nil {
+			panic(err)
 		}
 	}()
 
@@ -105,8 +105,8 @@ func TestConnSendByte(t *testing.T) {
 		pgConn := NewConn(client)
 		err := pgConn.SendByte('X')
 
-		if !assert.NoError(t, err) {
-			t.FailNow()
+		if err != nil {
+			panic(err)
 		}
 	}()
 
@@ -138,7 +138,7 @@ func BenchmarkConnThroughput(b *testing.B) {
 			err := pgConn.SendMessage(msg)
 
 			if err != nil {
-				b.Fatal(err)
+				panic(err)
 			}
 		}
 	}()
