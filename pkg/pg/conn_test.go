@@ -1,6 +1,7 @@
 package pg
 
 import (
+	"io"
 	"net"
 	"testing"
 
@@ -107,6 +108,20 @@ func TestConnSendByte(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, []byte{'X'}, buf)
+}
+
+func TestConnClose(t *testing.T) {
+	client, server := net.Pipe()
+
+	defer client.Close()
+	defer server.Close()
+
+	pgConn := NewConn(client)
+	pgConn.Close()
+
+	_, err := client.Read(make([]byte, 1))
+
+	assert.Equal(t, io.ErrClosedPipe, err)
 }
 
 func BenchmarkConnThroughput(b *testing.B) {

@@ -14,7 +14,7 @@ func NewConn(conn net.Conn) *Conn {
 	return &Conn{conn: conn}
 }
 
-// RecvStartupMessage receives StartupMessage from the underlying connection.
+// RecvStartupMessage receives StartupMessage from the underlying network connection.
 func (h *Conn) RecvStartupMessage() (*StartupMessage, error) {
 	frame, err := ReadStartupFrame(h.conn)
 
@@ -25,7 +25,7 @@ func (h *Conn) RecvStartupMessage() (*StartupMessage, error) {
 	return ParseStartupMessage(frame)
 }
 
-// RecvMessage receives PostgreSQL message from the underlying connection.
+// RecvMessage receives PostgreSQL message from the underlying network connection.
 func (h *Conn) RecvMessage() (Message, error) {
 	frame, err := ReadStandardFrame(h.conn)
 
@@ -49,4 +49,9 @@ func (h *Conn) SendMessage(msg Message) error {
 func (h *Conn) SendByte(c byte) error {
 	_, err := h.conn.Write([]byte{c})
 	return err
+}
+
+// Close closes the underlying network connection.
+func (h *Conn) Close() error {
+	return h.conn.Close()
 }
