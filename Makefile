@@ -29,7 +29,7 @@ build: BUILD_DATE ?= $(shell date +%FT%T%z)
 build: LDFLAGS += -X github.com/hired/gevulot/pkg/cli.version=$(VERSION) -X github.com/hired/gevulot/pkg/cli.commitHash=$(COMMIT_HASH) -X github.com/hired/gevulot/pkg/cli.buildDate=$(BUILD_DATE)
 
 lint:
-	golint -set_exit_status=1 ./pkg/...
+	golangci-lint run ./pkg/...
 
 run: build
 	$(OUT)

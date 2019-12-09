@@ -1,0 +1,16 @@
+#
+# This is configuration for golangci-lint (ex. gometalinter).
+# It is designed to be opinionated and as strict as humanly possible.
+# DO NOT DISABLE RULES WITHOUT A GOOD REASON!
+#
+
+[linters]
+  enable-all = true
+  disable = [
+    "godox" # godox prohibits using FIXME/TODO in comments for no good reason
+  ]
+
+[linters-settings]
+
+  [linters-settings.funlen]
+    lines = 120 # default 60
