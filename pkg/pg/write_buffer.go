@@ -13,7 +13,7 @@ type WriteBuffer []byte
 //
 // Main use case:
 //
-//   var buf PgReadBuffer     // No need to allocate if you don't know the size
+//   var buf pg.WriteBuffer   // No need to allocate
 //   buf.WriteInt32()         // Write values
 //   buf.WiteString("hello")
 //   ...

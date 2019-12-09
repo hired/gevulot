@@ -87,7 +87,7 @@ func (b *ReadBuffer) ReadString() (string, error) {
 	nullIndex := bytes.IndexByte(*b, 0)
 
 	if nullIndex < 0 {
-		return "", fmt.Errorf("invalid message format; expected string terminator")
+		return "", fmt.Errorf("invalid message format: expected string terminator")
 	}
 
 	// Read string bytes including \0x00
