@@ -41,14 +41,7 @@ func (h *Conn) RecvMessage() (Message, error) {
 
 // SendMessage sends given message over the network.
 func (h *Conn) SendMessage(msg Message) error {
-	frame, err := msg.Frame()
-
-	if err != nil {
-		return err
-	}
-
-	_, err = h.conn.Write(frame.Bytes())
-
+	_, err := h.conn.Write(msg.Frame().Bytes())
 	return err
 }
 

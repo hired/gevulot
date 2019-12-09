@@ -18,7 +18,7 @@ func ParseGenericMessage(frame Frame) (*GenericMessage, error) {
 }
 
 // Frame serializes the message to send it over the network.
-func (m *GenericMessage) Frame() (Frame, error) {
+func (m *GenericMessage) Frame() Frame {
 	// XXX: we assume that the frame is always standard
-	return NewStandardFrame(m.Type, m.Body), nil
+	return NewStandardFrame(m.Type, m.Body)
 }

@@ -36,9 +36,7 @@ func TestStartupMessageFrame(t *testing.T) {
 		ProtocolVersion: SSLRequestMagic,
 	}
 
-	frame, err := msg.Frame()
-
-	assert.NoError(t, err)
+	frame := msg.Frame()
 	assert.Equal(t, []byte(GoldenSSLRequestMessagePacket), frame.Bytes())
 
 	// Test regular start up
@@ -52,8 +50,6 @@ func TestStartupMessageFrame(t *testing.T) {
 		},
 	}
 
-	frame, err = msg.Frame()
-
-	assert.NoError(t, err)
+	frame = msg.Frame()
 	assert.Equal(t, []byte(GoldenStartupMessagePacket), frame.Bytes())
 }

@@ -40,13 +40,7 @@ func TestConnRecvMessage(t *testing.T) {
 			Body: []byte("test test"),
 		}
 
-		frame, err := msg.Frame()
-
-		if err != nil {
-			panic(err)
-		}
-
-		_, err = server.Write(frame.Bytes())
+		_, err := server.Write(msg.Frame().Bytes())
 
 		if err != nil {
 			panic(err)
@@ -86,12 +80,10 @@ func TestConnSendMessage(t *testing.T) {
 		}
 	}()
 
-	expectedFrame, err := msg.Frame()
-	assert.NoError(t, err)
-
+	expectedFrame := msg.Frame()
 	receivedFrame, err := ReadStandardFrame(server)
-	assert.NoError(t, err)
 
+	assert.NoError(t, err)
 	assert.Equal(t, expectedFrame, receivedFrame)
 }
 

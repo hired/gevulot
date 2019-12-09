@@ -21,8 +21,7 @@ func TestGenericMessageFrame(t *testing.T) {
 		Body: []byte("test"),
 	}
 
-	frame, err := msg.Frame()
+	frame := msg.Frame()
 
-	assert.NoError(t, err)
 	assert.Equal(t, []byte{'X', 0x00, 0x00, 0x00, 0x08, 't', 'e', 's', 't'}, frame.Bytes())
 }

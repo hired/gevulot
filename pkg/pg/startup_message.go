@@ -69,7 +69,7 @@ func ParseStartupMessage(frame Frame) (*StartupMessage, error) {
 }
 
 // Frame serializes the message to send it over the network.
-func (m *StartupMessage) Frame() (Frame, error) {
+func (m *StartupMessage) Frame() Frame {
 	var messageBuffer WriteBuffer
 
 	messageBuffer.WriteInt32(m.ProtocolVersion)
@@ -88,5 +88,5 @@ func (m *StartupMessage) Frame() (Frame, error) {
 		messageBuffer.WriteByte(0)
 	}
 
-	return NewStartupFrame(messageBuffer), nil
+	return NewStartupFrame(messageBuffer)
 }
