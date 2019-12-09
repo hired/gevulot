@@ -4,7 +4,7 @@ package pg
 // See https://www.postgresql.org/docs/9.6/protocol-overview.html#PROTOCOL-MESSAGE-CONCEPTS for details.
 // All frame types must implement this interface.
 type Frame interface {
-	// MessageType returns this frame's message type
+	// MessageType returns this frame's message type.
 	MessageType() byte
 
 	// MessageBody returns message body bytes.
