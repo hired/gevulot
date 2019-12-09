@@ -6,8 +6,8 @@ import (
 )
 
 // StandardFrame conveys arbitrary PostgreSQL message.
-// The first byte of a frame identifies the message type, and the next four bytes specify the length of the the attached message
-// (this length count includes itself, but not the message-type byte).
+// The first byte of a frame identifies the message type, and the next four bytes specify the length
+// of the the attached message (this length count includes itself, but not the message-type byte).
 type StandardFrame []byte
 
 // Compile time check to make sure that StandardFrame implements the Frame interface.

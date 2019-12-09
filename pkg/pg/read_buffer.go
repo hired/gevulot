@@ -83,7 +83,7 @@ func (b *ReadBuffer) ReadInt16() (int16, error) {
 // ReadString reads a null-terminated string and advances the buffer over it.
 // If there is no terminator present in the buffer, it returns error and does not advance.
 func (b *ReadBuffer) ReadString() (string, error) {
-	// Find the first occurence of \0x00
+	// Find the first occurrence of \0x00
 	nullIndex := bytes.IndexByte(*b, 0)
 
 	if nullIndex < 0 {
