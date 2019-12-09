@@ -23,28 +23,70 @@ type StartupMessageParameter struct {
 // Compile time check to make sure that StartupMessage implements the Message interface.
 var _ Message = &StartupMessage{}
 
-// Marshal serializes the message to send it over the network.
-func (m *StartupMessage) Marshal() ([]byte, error) {
-	var paramsBuffer WriteBuffer
+// ParseStartupMessage parses raw network frame and returns StartupMessage.
+func ParseStartupMessage(frame Frame) (*StartupMessage, error) {
+	messageData := ReadBuffer(frame.MessageBody())
+
+	// Start decoding the message
+	protocolVersion, err := messageData.ReadInt32()
+
+	if err != nil {
+		return nil, err
+	}
+
+	var parameters []StartupMessageParameter
+
+	// NB: startup message won't contain any parameters if this is SSL negotiation message
+	if messageData.Len() > 0 {
+		// Dictionary encoded as tuples of strings + ending \0
+		for {
+			key, err := messageData.ReadString()
+
+			if err != nil {
+				return nil, err
+			}
+
+			if key == "" {
+				break
+			}
+
+			value, err := messageData.ReadString()
+
+			if err != nil {
+				return nil, err
+			}
+
+			parameters = append(parameters, StartupMessageParameter{key, value})
+		}
+	}
+
+	message := &StartupMessage{
+		ProtocolVersion: protocolVersion,
+		Parameters:      parameters,
+	}
+
+	return message, nil
+}
+
+// Frame serializes the message to send it over the network.
+func (m *StartupMessage) Frame() (Frame, error) {
+	var messageBuffer WriteBuffer
+
+	messageBuffer.WriteInt32(m.ProtocolVersion)
+
+	hasParams := false
 
 	// Dictionary is encoded as string key-value pair + ending /0x00
 	for _, param := range m.Parameters {
-		paramsBuffer.WriteString(param.Name)
-		paramsBuffer.WriteString(param.Value)
+		messageBuffer.WriteString(param.Name)
+		messageBuffer.WriteString(param.Value)
+
+		hasParams = true
 	}
 
-	if paramsBuffer.Len() > 0 {
-		paramsBuffer.WriteByte(0)
+	if hasParams {
+		messageBuffer.WriteByte(0)
 	}
 
-	// Total message length including length itself
-	messageLength := paramsBuffer.Len() + 8 // 8 = length (int32) + protocol version (int32)
-	messageBuffer := make(WriteBuffer, 0, messageLength)
-
-	// NB: StartupMessage does not have a leading type byte!
-	messageBuffer.WriteInt32(int32(messageLength))
-	messageBuffer.WriteInt32(m.ProtocolVersion)
-	messageBuffer.WriteBytes(paramsBuffer)
-
-	return messageBuffer, nil
+	return NewStartupFrame(messageBuffer), nil
 }

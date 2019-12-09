@@ -22,16 +22,24 @@ const GoldenStartupMessagePacket = "\x00\x00\x00\x52\x00\x03\x00\x00\x75\x73\x65
 	"\x6e\x74\x5f\x65\x6e\x63\x6f\x64\x69\x6e\x67\x00\x55\x54\x46\x38" +
 	"\x00\x00"
 
-func TestStartupMessageMarshal(t *testing.T) {
+func TestParseStartupMessage(t *testing.T) {
+	msg, err := ParseStartupMessage(StartupFrame(GoldenStartupMessagePacket))
+
+	assert.NoError(t, err)
+	assert.Equal(t, int32(DefaultProtocolVersion), msg.ProtocolVersion)
+	assert.Equal(t, 4, len(msg.Parameters))
+}
+
+func TestStartupMessageFrame(t *testing.T) {
 	// Test SSL request
 	msg := &StartupMessage{
 		ProtocolVersion: SSLRequestMagic,
 	}
 
-	packet, err := msg.Marshal()
+	frame, err := msg.Frame()
 
 	assert.NoError(t, err)
-	assert.Equal(t, packet, []byte(GoldenSSLRequestMessagePacket))
+	assert.Equal(t, []byte(GoldenSSLRequestMessagePacket), frame.Bytes())
 
 	// Test regular start up
 	msg = &StartupMessage{
@@ -44,8 +52,8 @@ func TestStartupMessageMarshal(t *testing.T) {
 		},
 	}
 
-	packet, err = msg.Marshal()
+	frame, err = msg.Frame()
 
 	assert.NoError(t, err)
-	assert.Equal(t, packet, []byte(GoldenStartupMessagePacket))
+	assert.Equal(t, []byte(GoldenStartupMessagePacket), frame.Bytes())
 }
