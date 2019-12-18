@@ -10,7 +10,7 @@ import (
 const TestDBName = "gevulot_test"
 
 func TestInspectorDatabaseName(t *testing.T) {
-	inspector, err := OpenDSN("postgresql:///" + TestDBName + "?sslmode=disable")
+	inspector, err := Inspect("postgresql:///" + TestDBName + "?sslmode=disable")
 	assert.NoError(t, err)
 
 	defer inspector.Close()
@@ -22,7 +22,7 @@ func TestInspectorDatabaseName(t *testing.T) {
 }
 
 func TestInspectorOIDTableMapping(t *testing.T) {
-	inspector, err := OpenDSN("postgresql:///" + TestDBName + "?sslmode=disable")
+	inspector, err := Inspect("postgresql:///" + TestDBName + "?sslmode=disable")
 	assert.NoError(t, err)
 
 	defer inspector.Close()
@@ -47,7 +47,7 @@ func TestInspectorOIDTableMapping(t *testing.T) {
 }
 
 func TestInspectorClose(t *testing.T) {
-	inspector, err := OpenDSN("postgresql:///" + TestDBName + "?sslmode=disable")
+	inspector, err := Inspect("postgresql:///" + TestDBName + "?sslmode=disable")
 	assert.NoError(t, err)
 
 	err = inspector.Close()
