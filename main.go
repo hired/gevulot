@@ -4,6 +4,9 @@ import (
 	"os"
 
 	"github.com/hired/gevulot/pkg/cli"
+
+	// Register PG driver
+	_ "github.com/lib/pq"
 )
 
 // main is the entrypoint of Gevulot.
