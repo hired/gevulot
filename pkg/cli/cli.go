@@ -15,8 +15,8 @@ const appName = "gevulot"
 // Build information; provisioned by ldflags
 var (
 	version    string = "<unknown>"
-	commitHash string = "<unknown>"
-	buildDate  string = "<unknown>"
+	commitHash string = "<unknown>" //nolint: gochecknoglobals
+	buildDate  string = "<unknown>" //nolint: gochecknoglobals
 )
 
 type cli struct {
@@ -100,20 +100,19 @@ func (c *cli) prepareConfigChan(configPath string) (<-chan *server.Config, error
 	return configChan, nil
 }
 
-// Run handles CLI for Gevulot server and returns exit code.
-func (c *cli) Run(args []string) (exitCode int) {
+// Run handles CLI for Gevulot server and returns exit code. This method returns UNIX exit code.
+func (c *cli) Run(args []string) int {
 	// Parse CLI args and flags
 	flags, err := c.parseArgs(args)
 
 	if err != nil {
 		fmt.Fprintf(c.stderr, "%v\n", err)
-		exitCode = 1
+		return 1
 	}
 
 	// Exit immediately if user asked for a help or an app version
 	if flags.isHelp || flags.isVersion {
-		exitCode = 0
-		return
+		return 0
 	}
 
 	// Setup logrus
@@ -124,8 +123,7 @@ func (c *cli) Run(args []string) (exitCode int) {
 
 	if err != nil {
 		fmt.Fprintf(c.stderr, "failed to load config: %v\n", err)
-		exitCode = 1
-		return
+		return 1
 	}
 
 	// Run the server (this is blocking call)
@@ -133,9 +131,8 @@ func (c *cli) Run(args []string) (exitCode int) {
 
 	if err != nil {
 		fmt.Fprintf(c.stderr, "server error: %v\n", err)
-		exitCode = 1
-		return
+		return 1
 	}
 
-	return
+	return 0
 }

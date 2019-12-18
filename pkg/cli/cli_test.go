@@ -11,13 +11,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func init() {
-	// Set build info
-	version = "1.0"
-	commitHash = "deadbeef"
-	buildDate = "10/29/1987"
-}
-
 func mockedCli(stdout, stderr io.Writer) *cli {
 	return &cli{
 		stdout:    stdout,
@@ -28,6 +21,11 @@ func mockedCli(stdout, stderr io.Writer) *cli {
 
 // NB: THIS MUST BE SEQUENTIAL!
 func TestCliRun(t *testing.T) {
+	// Set build info
+	version = "1.0"
+	commitHash = "deadbeef"
+	buildDate = "10/29/1987"
+
 	// Regexp that represents an empty output
 	none := "^$"
 
@@ -44,6 +42,9 @@ func TestCliRun(t *testing.T) {
 	for _, tc := range testCases {
 		args := strings.Split(tc.input, " ")
 
+		expectedStdout, expectedStderr, expectedExitCode :=
+			tc.expectedStdout, tc.expectedStderr, tc.expectedExitCode
+
 		t.Run(tc.input, func(t *testing.T) {
 			mockedStdout := &bytes.Buffer{}
 			mockedStderr := &bytes.Buffer{}
@@ -51,9 +52,9 @@ func TestCliRun(t *testing.T) {
 			cli := mockedCli(mockedStdout, mockedStderr)
 			exitCode := cli.Run(args)
 
-			assert.Equal(t, exitCode, tc.expectedExitCode)
-			assert.Regexp(t, tc.expectedStdout, mockedStdout.String())
-			assert.Regexp(t, tc.expectedStderr, mockedStderr.String())
+			assert.Equal(t, exitCode, expectedExitCode)
+			assert.Regexp(t, expectedStdout, mockedStdout.String())
+			assert.Regexp(t, expectedStderr, mockedStderr.String())
 		})
 	}
 
