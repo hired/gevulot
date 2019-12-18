@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
+	// This package is the only place where we use PG driver
+	_ "github.com/lib/pq"
 	"github.com/lib/pq/oid"
 )
 
