@@ -53,3 +53,19 @@ func TestStartupMessageFrame(t *testing.T) {
 	frame = msg.Frame()
 	assert.Equal(t, []byte(GoldenStartupMessagePacket), frame.Bytes())
 }
+
+func TestStartupMessageGetParameter(t *testing.T) {
+	msg := &StartupMessage{
+		ProtocolVersion: DefaultProtocolVersion,
+		Parameters: []StartupMessageParameter{
+			{Name: "user", Value: "hired"},
+			{Name: "database", Value: "hired_dev"},
+			{Name: "application_name", Value: "psql"},
+			{Name: "client_encoding", Value: "UTF8"},
+		},
+	}
+
+	assert.Equal(t, "hired", msg.GetParameter("user"))
+	assert.Equal(t, "UTF8", msg.GetParameter("client_encoding"))
+	assert.Equal(t, "", msg.GetParameter("foo"))
+}

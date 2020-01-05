@@ -90,3 +90,14 @@ func (m *StartupMessage) Frame() Frame {
 
 	return NewStartupFrame(messageBuffer)
 }
+
+// GetParameter returns parameter value by its name. If parameter is not set it returns an empty string.
+func (m *StartupMessage) GetParameter(name string) string {
+	for _, param := range m.Parameters {
+		if param.Name == name {
+			return param.Value
+		}
+	}
+
+	return ""
+}
