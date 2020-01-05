@@ -35,7 +35,9 @@ func TestFileWatcherWatch(t *testing.T) {
 	watcher.OnRemove = func() {
 		panic("unexpected OnRemove callback fired from a file watcher")
 	}
-	watcher.Watch()
+
+	err = watcher.Watch()
+	assert.NoError(t, err)
 
 	// If we don't stop the watcher OnRemove will trigger a panic
 	defer watcher.StopWatch()
