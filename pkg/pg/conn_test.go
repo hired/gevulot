@@ -110,6 +110,17 @@ func TestConnSendByte(t *testing.T) {
 	assert.Equal(t, []byte{'X'}, buf)
 }
 
+func TestConnUnwrap(t *testing.T) {
+	client, server := net.Pipe()
+
+	defer client.Close()
+	defer server.Close()
+
+	pgConn := NewConn(client)
+
+	assert.Same(t, client, pgConn.Unwrap())
+}
+
 func TestConnClose(t *testing.T) {
 	client, server := net.Pipe()
 

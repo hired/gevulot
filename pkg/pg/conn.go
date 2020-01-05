@@ -51,7 +51,12 @@ func (h *Conn) SendByte(c byte) error {
 	return err
 }
 
-// Close closes the underlying network connection.
+// Unwrap returns the underlying net.Conn.
+func (h *Conn) Unwrap() net.Conn {
+	return h.conn
+}
+
+// Close closes the underlying net.Conn.
 func (h *Conn) Close() error {
 	return h.conn.Close()
 }
