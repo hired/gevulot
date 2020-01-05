@@ -23,14 +23,14 @@ func TestFileWatcherWatch(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	fileChanged := false
+	fileChanged := make(chan bool)
 
 	watcher := newFileWatcher(tmpfile.Name())
 	watcher.OnCreate = func() {
 		panic("unexpected OnCreate callback fired from a file watcher")
 	}
 	watcher.OnWrite = func() {
-		fileChanged = true
+		fileChanged <- true
 	}
 	watcher.OnRemove = func() {
 		panic("unexpected OnRemove callback fired from a file watcher")
@@ -40,11 +40,23 @@ func TestFileWatcherWatch(t *testing.T) {
 	// If we don't stop the watcher OnRemove will trigger a panic
 	defer watcher.StopWatch()
 
-	assert.False(t, fileChanged)
+	select {
+	case <-fileChanged:
+		assert.FailNow(t, "unexpected OnWrite callback")
+	default:
+	}
 
 	if _, err := tmpfile.Write([]byte("bar")); err != nil {
 		t.Fatal(err)
 	}
 
-	assert.Eventually(t, func() bool { return fileChanged }, time.Second, 10*time.Millisecond)
+	timer := time.NewTimer(5 * time.Second)
+
+	select {
+	case <-fileChanged:
+		timer.Stop()
+
+	case <-timer.C:
+		assert.FailNow(t, "OnWrite hasn't been fired after file change")
+	}
 }
