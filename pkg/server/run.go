@@ -1,17 +1,12 @@
 package server
 
-import (
-	log "github.com/sirupsen/logrus"
-)
-
 // Run starts the PG proxy server.
 func Run(configChan <-chan *Config) error {
-	for {
-		select {
-		case config := <-configChan:
-			log.Infof("server config: %#v", config)
-		}
-	}
+	cfg := NewConfigDistributor(configChan)
+	defer cfg.Close()
 
-	return nil
+	srv := NewServer(cfg)
+	defer srv.Close()
+
+	return srv.Start()
 }

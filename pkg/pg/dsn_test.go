@@ -14,7 +14,7 @@ func TestParseDatabaseURI(t *testing.T) {
 	defaultUser := user.Username
 
 	//nolint:lll
-	validTestCases := map[string]ConnectionSettings{
+	validTestCases := map[string]ConnectionParams{
 		"postgresql://":                       {"host": "localhost", "port": "5432", "user": defaultUser, "database": defaultUser},
 		"postgres://":                         {"host": "localhost", "port": "5432", "user": defaultUser, "database": defaultUser},
 		"postgresql://hired.com":              {"host": "hired.com", "port": "5432", "user": defaultUser, "database": defaultUser},

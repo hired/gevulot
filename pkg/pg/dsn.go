@@ -7,12 +7,12 @@ import (
 	"strings"
 )
 
-// ConnectionSettings is a map containing PostgreSQL connection parameters.
-type ConnectionSettings map[string]string
+// ConnectionParams is a map containing PostgreSQL connection parameters.
+type ConnectionParams map[string]string
 
 // ParseDatabaseURL parses given PostgreSQL connection string in URI format and returns connection params as a map.
 // See the documentation: https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING
-func ParseDatabaseURI(connString string) (ConnectionSettings, error) {
+func ParseDatabaseURI(connString string) (ConnectionParams, error) {
 	url, err := url.Parse(connString)
 
 	if err != nil {
@@ -61,8 +61,8 @@ func ParseDatabaseURI(connString string) (ConnectionSettings, error) {
 }
 
 // defaultConnectionSettings returns PostgreSQL implicit default connection settings.
-func defaultConnectionSettings() ConnectionSettings {
-	settings := ConnectionSettings{
+func defaultConnectionSettings() ConnectionParams {
+	settings := ConnectionParams{
 		"host": "localhost",
 		"port": "5432",
 	}
