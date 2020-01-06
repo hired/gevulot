@@ -2,7 +2,7 @@
 OUT := build/gevulot
 
 # List of flags to pass to `go test` command
-TEST_FLAGS :=
+TEST_FLAGS := -timeout 5s -race
 
 # List of LDFLAGS to pass to `go build` command
 LDFLAGS :=
