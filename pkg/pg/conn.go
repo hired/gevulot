@@ -34,6 +34,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	}
 
 	switch frame.MessageType() {
+	case QueryMessageType:
+		return ParseQueryMessage(frame)
+
 	default:
 		return ParseGenericMessage(frame)
 	}
