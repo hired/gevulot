@@ -12,7 +12,7 @@ type QueryMessage struct {
 // Compile time check to make sure that QueryMessage implements the Message interface.
 var _ Message = &QueryMessage{}
 
-// ParseQueryMessage parses raw network frame and returns QueryMessage.
+// ParseQueryMessage parses QueryMessage from the network frame.
 func ParseQueryMessage(frame Frame) (*QueryMessage, error) {
 	// Assert the message type
 	if frame.MessageType() != QueryMessageType {
@@ -30,7 +30,7 @@ func ParseQueryMessage(frame Frame) (*QueryMessage, error) {
 	return &QueryMessage{Query: query}, nil
 }
 
-// Frame serializes the message to send it over the network.
+// Frame serializes the message into a network frame.
 func (m *QueryMessage) Frame() Frame {
 	var messageBuffer WriteBuffer
 

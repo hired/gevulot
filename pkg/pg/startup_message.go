@@ -23,7 +23,7 @@ type StartupMessageParameter struct {
 // Compile time check to make sure that StartupMessage implements the Message interface.
 var _ Message = &StartupMessage{}
 
-// ParseStartupMessage parses raw network frame and returns StartupMessage.
+// ParseStartupMessage parses StartupMessage from the network frame.
 func ParseStartupMessage(frame Frame) (*StartupMessage, error) {
 	messageData := ReadBuffer(frame.MessageBody())
 
@@ -68,7 +68,7 @@ func ParseStartupMessage(frame Frame) (*StartupMessage, error) {
 	return message, nil
 }
 
-// Frame serializes the message to send it over the network.
+// Frame serializes the message into a network frame.
 func (m *StartupMessage) Frame() Frame {
 	var messageBuffer WriteBuffer
 

@@ -1,6 +1,6 @@
 package pg
 
-// A Frame is a raw PostgreSQL message sent over the the network to/from client/DB.
+// A Frame is a raw PostgreSQL message sent/received over the network to/from client/DB.
 // See https://www.postgresql.org/docs/9.6/protocol-overview.html#PROTOCOL-MESSAGE-CONCEPTS for details.
 // All frame types must implement this interface.
 type Frame interface {

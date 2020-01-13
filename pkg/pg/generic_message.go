@@ -9,7 +9,7 @@ type GenericMessage struct {
 // Compile time check to make sure that GenericMessage implements the Message interface.
 var _ Message = &GenericMessage{}
 
-// ParseGenericMessage parses raw network frame and returns GenericMessage.
+// ParseGenericMessage parses GenericMessage from the network frame.
 func ParseGenericMessage(frame Frame) (*GenericMessage, error) {
 	return &GenericMessage{
 		Type: frame.MessageType(),
@@ -17,7 +17,7 @@ func ParseGenericMessage(frame Frame) (*GenericMessage, error) {
 	}, nil
 }
 
-// Frame serializes the message to send it over the network.
+// Frame serializes the message into a network frame.
 func (m *GenericMessage) Frame() Frame {
 	// XXX: we assume that the frame is always standard
 	return NewStandardFrame(m.Type, m.Body)

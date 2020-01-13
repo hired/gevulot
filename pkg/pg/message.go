@@ -6,7 +6,7 @@ import (
 
 // Message is a PostgreSQL message that a client and a DB sending to each other.
 type Message interface {
-	// Frame returns network frame of the message.
+	// Frame serializes the message into a network frame.
 	Frame() Frame
 }
 
