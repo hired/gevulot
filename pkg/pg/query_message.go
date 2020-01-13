@@ -3,7 +3,7 @@ package pg
 // QueryMessageType identifies QueryMessage message.
 const QueryMessageType = 'Q'
 
-// QueryMessage represent a simple SQL query sent by a frontend.
+// QueryMessage represents a simple SQL query sent by a frontend.
 type QueryMessage struct {
 	// SQL query
 	Query string
@@ -12,7 +12,7 @@ type QueryMessage struct {
 // Compile time check to make sure that QueryMessage implements the Message interface.
 var _ Message = &QueryMessage{}
 
-// ParseQueryMessage parses QueryMessage from the network frame.
+// ParseQueryMessage parses QueryMessage from a network frame.
 func ParseQueryMessage(frame Frame) (*QueryMessage, error) {
 	// Assert the message type
 	if frame.MessageType() != QueryMessageType {

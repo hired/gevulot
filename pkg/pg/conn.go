@@ -37,6 +37,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case RowDescriptionMessageType:
 		return ParseRowDescriptionMessage(frame)
 
+	case DataRowMessageType:
+		return ParseDataRowMessage(frame)
+
 	case QueryMessageType:
 		return ParseQueryMessage(frame)
 

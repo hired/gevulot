@@ -7,7 +7,7 @@ import (
 // RowDescriptionMessageType identifies RowDescriptionMessage message.
 const RowDescriptionMessageType = 'T'
 
-// RowDescriptionMessage represent a message sent by a backend to describe query result fields.
+// RowDescriptionMessage represents a message sent by a backend to describe query result fields.
 type RowDescriptionMessage struct {
 	// List of fields to be returned
 	Fields []*FieldDescriptor
@@ -49,7 +49,7 @@ const (
 // Compile time check to make sure that RowDescriptionMessage implements the Message interface.
 var _ Message = &RowDescriptionMessage{}
 
-// ParseRowDescriptionMessage parses RowDescriptionMessage from the network frame.
+// ParseRowDescriptionMessage parses RowDescriptionMessage from a network frame.
 func ParseRowDescriptionMessage(frame Frame) (*RowDescriptionMessage, error) {
 	// Assert the message type
 	if frame.MessageType() != RowDescriptionMessageType {
