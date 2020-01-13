@@ -3,6 +3,8 @@ package cli
 import (
 	"fmt"
 	"io"
+	"os"
+	"path/filepath"
 
 	"github.com/hired/gevulot/pkg/server"
 	log "github.com/sirupsen/logrus"
@@ -61,7 +63,7 @@ func (c *cli) parseArgs(args []string) (*cliArgs, error) {
 	app.Flag("config", "Set the configuration file path").
 		Short('c').
 		PlaceHolder("PATH").
-		Default("gevulot.toml").
+		Default(filepath.Join(filepath.Dir(os.Args[0]), "gevulot.toml")).
 		StringVar(&parsedArgs.configPath)
 
 	// Expose --help and --version flags to our struct
