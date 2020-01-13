@@ -43,6 +43,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case QueryMessageType:
 		return ParseQueryMessage(frame)
 
+	case CommandCompleteMessageType:
+		return ParseCommandCompleteMessage(frame)
+
 	default:
 		return ParseGenericMessage(frame)
 	}
