@@ -37,7 +37,7 @@ func TestConnRecvMessage(t *testing.T) {
 
 	go func() {
 		msg := &GenericMessage{
-			Type: 'X',
+			Type: '$',
 			Body: []byte("test test"),
 		}
 
@@ -54,7 +54,7 @@ func TestConnRecvMessage(t *testing.T) {
 	assert.NoError(t, err)
 
 	if gm, ok := msg.(*GenericMessage); ok {
-		assert.Equal(t, byte('X'), gm.Type)
+		assert.Equal(t, byte('$'), gm.Type)
 		assert.Equal(t, []byte("test test"), gm.Body)
 	} else {
 		assert.Fail(t, "received message is not a GenericMessage")
@@ -68,7 +68,7 @@ func TestConnSendMessage(t *testing.T) {
 	defer server.Close()
 
 	msg := &GenericMessage{
-		Type: 'X',
+		Type: '$',
 		Body: []byte("test test"),
 	}
 
@@ -96,7 +96,7 @@ func TestConnSendByte(t *testing.T) {
 
 	go func() {
 		pgConn := NewConn(client)
-		err := pgConn.SendByte('X')
+		err := pgConn.SendByte('$')
 
 		if err != nil {
 			panic(err)
@@ -107,7 +107,7 @@ func TestConnSendByte(t *testing.T) {
 	_, err := server.Read(buf)
 
 	assert.NoError(t, err)
-	assert.Equal(t, []byte{'X'}, buf)
+	assert.Equal(t, []byte{'$'}, buf)
 }
 
 func TestConnUnwrap(t *testing.T) {
