@@ -7,7 +7,13 @@
 [linters]
   enable-all = true
   disable = [
-    "godox" # godox prohibits using FIXME/TODO in comments for no good reason
+    # godox prohibits using FIXME/TODO in comments for no good reason
+    "godox",
+
+    # gomnd prohibits using magical numbers. In general, this is a good idea
+    # but Gevulot is a low-level project and we have to use numbers extensively.
+    # We can't move all of them into constants; it's just doesn't make sense.
+    "gomnd",
   ]
 
 [linters-settings]
