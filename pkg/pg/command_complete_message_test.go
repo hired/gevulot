@@ -23,10 +23,7 @@ func TestParseCommandCompleteMessage(t *testing.T) {
 }
 
 func TestCommandCompleteMessageFrame(t *testing.T) {
-	msg := &CommandCompleteMessage{
-		Tag: "SELECT 1",
-	}
-
+	msg := &CommandCompleteMessage{"SELECT 1"}
 	frame := msg.Frame()
 
 	assert.Equal(t, []byte(GoldenCommandCompleteMesagePacket), frame.Bytes())

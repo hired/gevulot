@@ -31,7 +31,7 @@ func TestParseDataRowMessage(t *testing.T) {
 func TestDataRowMessageFrame(t *testing.T) {
 	msg := &DataRowMessage{
 		Values: [][]byte{
-			{ 0x31, 0x34, 0x35, 0x32, 0x32, 0x36, 0x38 }, // id = 1452268
+			{0x31, 0x34, 0x35, 0x32, 0x32, 0x36, 0x38}, // id = 1452268
 			nil, // old_id = null
 			[]byte("Denis Diachkov"),
 			[]byte("denis.diachkov@hired.com"),

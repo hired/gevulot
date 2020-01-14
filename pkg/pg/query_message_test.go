@@ -24,10 +24,7 @@ func TestParseQueryMessage(t *testing.T) {
 }
 
 func TestQueryMessageFrame(t *testing.T) {
-	msg := &QueryMessage{
-		Query: "SELECT count(*) FROM users;",
-	}
-
+	msg := &QueryMessage{"SELECT count(*) FROM users;"}
 	frame := msg.Frame()
 
 	assert.Equal(t, []byte(GoldenQueryMesagePacket), frame.Bytes())
