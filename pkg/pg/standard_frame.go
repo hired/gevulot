@@ -28,7 +28,7 @@ func (f StandardFrame) Bytes() []byte {
 	return f
 }
 
-// NewStandardFrame initializes a new StartupFrame with the given type and message.
+// NewStandardFrame initializes a new StandardFrame with the given type and message.
 func NewStandardFrame(messageType byte, messageBody []byte) StandardFrame {
 	var buffer WriteBuffer
 

@@ -34,14 +34,20 @@ func (h *Conn) RecvMessage() (Message, error) {
 	}
 
 	switch frame.MessageType() {
+	case AuthenticationRequestMessageType:
+		return ParseAuthenticationRequestMessage(frame)
+
+	case ReadyForQueryMessageType:
+		return ParseReadyForQueryMessage(frame)
+
+	case QueryMessageType:
+		return ParseQueryMessage(frame)
+
 	case RowDescriptionMessageType:
 		return ParseRowDescriptionMessage(frame)
 
 	case DataRowMessageType:
 		return ParseDataRowMessage(frame)
-
-	case QueryMessageType:
-		return ParseQueryMessage(frame)
 
 	case CommandCompleteMessageType:
 		return ParseCommandCompleteMessage(frame)
