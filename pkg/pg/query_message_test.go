@@ -12,20 +12,22 @@ const GoldenQueryMesagePacket = "\x51\x00\x00\x00\x20\x53\x45\x4c\x45\x43\x54\x2
 	"\x74\x28\x2a\x29\x20\x46\x52\x4f\x4d\x20\x75\x73\x65\x72\x73\x3b\x00"
 
 func TestParseQueryMessage(t *testing.T) {
-	msg, err := ParseQueryMessage(StandardFrame(GoldenQueryMesagePacket))
+	{
+		msg, err := ParseQueryMessage(StandardFrame(GoldenQueryMesagePacket))
 
-	assert.NoError(t, err)
-	assert.Equal(t, "SELECT count(*) FROM users;", msg.Query)
+		assert.NoError(t, err)
+		assert.Equal(t, "SELECT count(*) FROM users;", msg.Query)
+	}
 
 	// Test invalid type
-	_, err = ParseQueryMessage(append(StandardFrame{'X'}, GoldenQueryMesagePacket[1:]...))
+	{
+		_, err := ParseQueryMessage(append(StandardFrame{'X'}, GoldenQueryMesagePacket[1:]...))
 
-	assert.Equal(t, ErrMalformedMessage, err)
+		assert.Equal(t, ErrMalformedMessage, err)
+	}
 }
 
 func TestQueryMessageFrame(t *testing.T) {
 	msg := &QueryMessage{"SELECT count(*) FROM users;"}
-	frame := msg.Frame()
-
-	assert.Equal(t, []byte(GoldenQueryMesagePacket), frame.Bytes())
+	assert.Equal(t, []byte(GoldenQueryMesagePacket), msg.Frame().Bytes())
 }

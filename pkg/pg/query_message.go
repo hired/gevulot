@@ -27,13 +27,12 @@ func ParseQueryMessage(frame Frame) (*QueryMessage, error) {
 		return nil, err
 	}
 
-	return &QueryMessage{Query: query}, nil
+	return &QueryMessage{query}, nil
 }
 
 // Frame serializes the message into a network frame.
 func (m *QueryMessage) Frame() Frame {
 	var messageBuffer WriteBuffer
-
 	messageBuffer.WriteString(m.Query)
 
 	return NewStandardFrame(QueryMessageType, messageBuffer)

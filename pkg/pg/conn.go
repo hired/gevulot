@@ -37,6 +37,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case AuthenticationRequestMessageType:
 		return ParseAuthenticationRequestMessage(frame)
 
+	case PasswordMessageType:
+		return ParsePasswordMessage(frame)
+
 	case ReadyForQueryMessageType:
 		return ParseReadyForQueryMessage(frame)
 
