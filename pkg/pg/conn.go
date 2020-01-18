@@ -55,6 +55,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case CommandCompleteMessageType:
 		return ParseCommandCompleteMessage(frame)
 
+	case ErrorResponseMessageType:
+		return ParseErrorResponseMessage(frame)
+
 	case TerminateMessageType:
 		return ParseTerminateMessage(frame)
 
