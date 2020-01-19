@@ -11,7 +11,7 @@ const DefaultProtocolVersion = 196608
 // it also identifies the particular protocol version to be used as well as any additional run-time parameters.
 type StartupMessage struct {
 	ProtocolVersion int32
-	Parameters      []StartupMessageParameter // NB: we want to preserve order so we can't use map here
+	Parameters      []*StartupMessageParameter // NB: we want to preserve order so we can't use map here
 }
 
 // StartupMessageParameter represents run-time parameter in a StartupMessage.
@@ -34,7 +34,7 @@ func ParseStartupMessage(frame Frame) (*StartupMessage, error) {
 		return nil, err
 	}
 
-	var parameters []StartupMessageParameter
+	var parameters []*StartupMessageParameter
 
 	// NB: startup message won't contain any parameters if this is SSL negotiation message
 	if messageData.Len() > 0 {
@@ -56,7 +56,7 @@ func ParseStartupMessage(frame Frame) (*StartupMessage, error) {
 				return nil, err
 			}
 
-			parameters = append(parameters, StartupMessageParameter{key, value})
+			parameters = append(parameters, &StartupMessageParameter{key, value})
 		}
 	}
 

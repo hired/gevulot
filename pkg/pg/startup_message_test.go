@@ -42,7 +42,7 @@ func TestStartupMessageFrame(t *testing.T) {
 	// Test regular start up
 	msg = &StartupMessage{
 		ProtocolVersion: DefaultProtocolVersion,
-		Parameters: []StartupMessageParameter{
+		Parameters: []*StartupMessageParameter{
 			{Name: "user", Value: "hired"},
 			{Name: "database", Value: "hired_dev"},
 			{Name: "application_name", Value: "psql"},
@@ -57,7 +57,7 @@ func TestStartupMessageFrame(t *testing.T) {
 func TestStartupMessageGetParameter(t *testing.T) {
 	msg := &StartupMessage{
 		ProtocolVersion: DefaultProtocolVersion,
-		Parameters: []StartupMessageParameter{
+		Parameters: []*StartupMessageParameter{
 			{Name: "user", Value: "hired"},
 			{Name: "database", Value: "hired_dev"},
 			{Name: "application_name", Value: "psql"},

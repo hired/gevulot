@@ -37,6 +37,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case AuthenticationRequestMessageType:
 		return ParseAuthenticationRequestMessage(frame)
 
+	case NegotiateProtocolVersionMessageType:
+		return ParseNoticeResponseMessage(frame)
+
 	case PasswordMessageType:
 		return ParsePasswordMessage(frame)
 
