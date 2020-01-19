@@ -43,6 +43,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case BackendKeyDataMessageType:
 		return ParseBackendKeyDataMessage(frame)
 
+	case ParameterStatusMessageType:
+		return ParseParameterStatusMessage(frame)
+
 	case PasswordMessageType:
 		return ParsePasswordMessage(frame)
 
