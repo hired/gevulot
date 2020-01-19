@@ -40,6 +40,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case NegotiateProtocolVersionMessageType:
 		return ParseNoticeResponseMessage(frame)
 
+	case BackendKeyDataMessageType:
+		return ParseBackendKeyDataMessage(frame)
+
 	case PasswordMessageType:
 		return ParsePasswordMessage(frame)
 
