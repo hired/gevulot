@@ -64,6 +64,9 @@ func (h *Conn) RecvMessage() (Message, error) {
 	case CommandCompleteMessageType:
 		return ParseCommandCompleteMessage(frame)
 
+	case EmptyQueryResponseMessageType:
+		return ParseEmptyQueryResponseMessage(frame)
+
 	case ErrorResponseMessageType:
 		return ParseErrorResponseMessage(frame)
 
