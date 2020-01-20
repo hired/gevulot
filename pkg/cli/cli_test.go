@@ -29,6 +29,9 @@ func TestCliRun(t *testing.T) {
 	// Regexp that represents an empty output
 	none := "^$"
 
+	// Regexp that represents any output
+	any := ".*"
+
 	testCases := []struct {
 		input            string
 		expectedStdout   string
@@ -37,6 +40,7 @@ func TestCliRun(t *testing.T) {
 	}{
 		{"--version", none, regexp.QuoteMeta("gevulot version 1.0 (deadbeef) built on 10/29/1987"), 0},
 		{"--help", none, regexp.QuoteMeta("usage: gevulot"), 0},
+		{"--verbose", regexp.QuoteMeta("debug output is enabled"), any, 1},
 	}
 
 	for _, tc := range testCases {

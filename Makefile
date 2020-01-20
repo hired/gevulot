@@ -36,7 +36,7 @@ lint:
 	golangci-lint run ./pkg/...
 
 run: build
-	$(OUT)
+	$(OUT) --verbose
 
 clean:
 	rm -f $(OUT)

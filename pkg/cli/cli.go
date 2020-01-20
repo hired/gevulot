@@ -40,6 +40,9 @@ type cliArgs struct {
 	// True when user asked for the app version
 	isVersion bool
 
+	// True when verbose output is enabled
+	isVerbose bool
+
 	// Path to the config
 	configPath string
 }
@@ -66,6 +69,11 @@ func (c *cli) parseArgs(args []string) (*cliArgs, error) {
 		Default(filepath.Join(filepath.Dir(os.Args[0]), "gevulot.toml")).
 		StringVar(&parsedArgs.configPath)
 
+	// Add --verbose flag to enable debug output
+	app.Flag("verbose", "Enable debug output").
+		Short('v').
+		BoolVar(&parsedArgs.isVerbose)
+
 	// Expose --help and --version flags to our struct
 	app.HelpFlag.BoolVar(&parsedArgs.isHelp)
 	app.VersionFlag.BoolVar(&parsedArgs.isHelp)
@@ -79,8 +87,14 @@ func (c *cli) parseArgs(args []string) (*cliArgs, error) {
 	return parsedArgs, nil
 }
 
-func (c *cli) configureLogger() {
+func (c *cli) configureLogger(verbose bool) {
 	log.SetOutput(c.stdout)
+
+	// Enable debug level if asked
+	if verbose {
+		log.SetLevel(log.DebugLevel)
+		log.Debug("debug output is enabled")
+	}
 }
 
 func (c *cli) prepareConfigChan(configPath string) (<-chan *server.Config, error) {
@@ -118,7 +132,7 @@ func (c *cli) Run(args []string) int {
 	}
 
 	// Setup logrus
-	c.configureLogger()
+	c.configureLogger(flags.isVerbose)
 
 	// Load config
 	configChan, err := c.prepareConfigChan(flags.configPath)
