@@ -35,6 +35,22 @@ CSP view:
 
 ![image](docs/diagrams/gevulot_goroutines_architecture.svg)
 
+### Dispatcher
+
+Dispatcher is responsible for processing messages from a database to a client and vice versa. 
+PostgreSQL protocol has deterministic message flow except when it doesn't :(
+
+Following messages can arrive at any time:
+
+* NoticeResponse
+* ParameterStatus
+* NotificationResponse
+
+To simplify the logic we use 2 parallel processing routines: one handles normal deterministic flow and
+another one — async out-of-order flow.
+
+![image](docs/diagrams/gevulot_dispatcher_message_flow.svg)
+
 ## Configuration File Reference
 
 Gevolut uses [TOML](https://github.com/toml-lang/toml) format for its config.

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="412 172 1507 696" width="1507" height="696">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica" font-size="16" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="0" x-height="522.9492" cap-height="717.28516" ascent="770.0195" descent="-229.98047" font-weight="400">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-9 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M -8 0 L 0 3 L 0 -3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.12.1 
+    <dc:date>2020-01-22 23:58:07 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" fill="none" fill-opacity="1" stroke="none" stroke-opacity="1" stroke-dasharray="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_42">
+        <path d="M 930.5 371 L 1232.5 371 L 1232.5 742 L 930.5 742 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_29">
+        <rect x="612" y="395" width="239" height="142.5" fill="white"/>
+        <rect x="612" y="395" width="239" height="142.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(617 400)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Message Filter</tspan>
+        </text>
+      </g>
+      <g id="Group_8">
+        <g id="Graphic_10">
+          <path d="M 449.96187 447.9795 L 514.03826 447.9795 C 518.4595 447.9795 522.0478 456.99306 522.0478 468.09904 C 522.0478 479.205 518.4595 488.21856 514.03826 488.21856 L 449.96187 488.21856 C 445.5406 488.21856 441.9523 479.205 441.9523 468.09904 C 441.9523 456.99306 445.5406 447.9795 449.96187 447.9795 M 514.03826 447.9795 C 509.617 447.9795 506.0287 456.99306 506.0287 468.09904 C 506.0287 479.205 509.617 488.21856 514.03826 488.21856" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_9">
+          <text transform="translate(441.09375 496.83285)" fill="black">
+            <tspan font-family="Helvetica" font-size="16" font-weight="400" fill="black" x="0" y="15">DB IN chan</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Graphic_20">
+        <path d="M 731.5 428.2 L 814.75 468.3 L 731.5 508.4 L 648.25 468.3 Z" fill="white"/>
+        <path d="M 731.5 428.2 L 814.75 468.3 L 731.5 508.4 L 648.25 468.3 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(675.7275 449.05)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="35.509504" y="15">Async </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="20.541504" y="33.448">Message?</tspan>
+        </text>
+      </g>
+      <g id="Graphic_25">
+        <rect x="962" y="425.1967" width="239" height="86.5" fill="white"/>
+        <rect x="962" y="425.1967" width="239" height="86.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(967 459.2227)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="62.78" y="15">Normal Queue</tspan>
+        </text>
+      </g>
+      <g id="Graphic_26">
+        <rect x="962" y="602" width="239" height="86.5" fill="white"/>
+        <rect x="962" y="602" width="239" height="86.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(967 636.026)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="66.78" y="15">Async Queue</tspan>
+        </text>
+      </g>
+      <g id="Graphic_27">
+        <rect x="1321" y="425.05" width="239" height="86.5" fill="white"/>
+        <rect x="1321" y="425.05" width="239" height="86.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1326 459.076)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="50.204" y="15">Normal Processor</tspan>
+        </text>
+      </g>
+      <g id="Graphic_28">
+        <rect x="1321" y="602" width="239" height="86.5" fill="white"/>
+        <rect x="1321" y="602" width="239" height="86.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1326 636.026)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="54.204" y="15">Async Processor</tspan>
+        </text>
+      </g>
+      <g id="Line_30">
+        <path d="M 731.5 508.4 L 731.5 645.25 L 952.1 645.25" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_31">
+        <rect x="713.908" y="572.2259" width="35.184" height="28.447998" fill="white"/>
+        <text transform="translate(718.908 577.2259)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="552447e-18" y="15">Yes</tspan>
+        </text>
+      </g>
+      <g id="Line_32">
+        <line x1="814.75" y1="468.3" x2="952.1" y2="468.43685" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_33">
+        <rect x="888.0122" y="454.1643" width="30.736" height="28.447998" fill="white"/>
+        <text transform="translate(893.0122 459.1643)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="39257486e-20" y="15">No</tspan>
+        </text>
+      </g>
+      <g id="Line_34">
+        <line x1="1201" y1="645.25" x2="1311.1" y2="645.25" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_35">
+        <line x1="1201" y1="468.4467" x2="1311.1" y2="468.3121" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_36">
+        <g id="Graphic_38">
+          <path d="M 1749.9619 534.5 L 1814.0383 534.5 C 1818.4595 534.5 1822.0478 543.51355 1822.0478 554.6195 C 1822.0478 565.7255 1818.4595 574.73905 1814.0383 574.73905 L 1749.9619 574.73905 C 1745.5406 574.73905 1741.9523 565.7255 1741.9523 554.6195 C 1741.9523 543.51355 1745.5406 534.5 1749.9619 534.5 M 1814.0383 534.5 C 1809.617 534.5 1806.0287 543.51355 1806.0287 554.6195 C 1806.0287 565.7255 1809.617 574.73905 1814.0383 574.73905" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_37">
+          <text transform="translate(1723.0078 583.35334)" fill="black">
+            <tspan font-family="Helvetica" font-size="16" font-weight="400" fill="black" x="0" y="15">Client OUT chan</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_39">
+        <path d="M 1560 645.25 L 1646.1 645.25 L 1646.1 553.68636 L 1731.9997 553.68636" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_40">
+        <path d="M 1560 468.3 L 1646.3454 468.3 L 1646.3454 553.68636 L 1732.6908 553.68636" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_41">
+        <line x1="638.35" y1="468.2851" x2="514.5963" y2="468.09904" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_49">
+        <line x1="1577.3077" y1="802.1538" x2="1519" y2="673" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_50">
+        <text transform="translate(816 177.62544)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="11.232" y="15">Dispatcher’s logic doesn’t use DB </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="4.256" y="33.448">input chan directly — instead it buf</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="22.792" y="51.895996">fering incoming messages into </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="36.416" y="70.34399">queue-like data structures.</tspan>
+        </text>
+      </g>
+      <g id="Line_51">
+        <line x1="576.9231" y1="647.4359" x2="651.8205" y2="512" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_52">
+        <text transform="translate(463 652.4359)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="8.868" y="15">Dispatcher’s filter receives </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.148" y="33.448">DB messages and sorts </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="31.5" y="51.895996">them into 2 queues.</tspan>
+        </text>
+      </g>
+      <g id="Graphic_53">
+        <text transform="translate(1486 807.1538)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="6.328" y="15">Async processing logic </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="18.904" y="33.448">just passes through </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="27.208" y="51.895996">async messages.</tspan>
+        </text>
+      </g>
+      <g id="Line_54">
+        <line x1="1005.3077" y1="385.57127" x2="947" y2="256.41743" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_55">
+        <line x1="1783.3077" y1="543.15385" x2="1818.4917" y2="408.87097" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_56">
+        <text transform="translate(1736 348.52697)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.424" y="15">Both routines sends </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="4.088" y="33.448">messages into a shared </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="11.936" y="51.895996">client output channel.</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
