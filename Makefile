@@ -14,7 +14,7 @@ endif
 
 default: build
 
-prepare_test_db:
+prepare-test-db:
 	createdb gevulot_test || exit 0
 	psql gevulot_test -f scripts/gevulot_test_schema.sql
 
