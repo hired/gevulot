@@ -44,3 +44,6 @@
 
   [linters-settings.goimports]
     local-prefixes = "github.com/hired/gevulot"
+
+  [linters-settings.lll]
+    line-length = 140
