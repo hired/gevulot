@@ -3,7 +3,7 @@ package pg
 // SSLRequestMagic is magic protocol version that client is using to request a SSL session.
 const SSLRequestMagic = 80877103
 
-// DefaultProtocolVersion is a default protocol version of PostgreSQL since version 7
+// DefaultProtocolVersion is a default protocol version of PostgreSQL since version 7.
 const DefaultProtocolVersion = 196608
 
 // StartupMessage represents the first message a client sends to the DB after establishing a connection.

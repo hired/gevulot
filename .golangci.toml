@@ -20,7 +20,6 @@
     "goconst",          # Finds repeated strings that could be replaced by a constant
     "gocritic",         # Collection of various opinionated linters
     "gocyclo",          # Computes and checks the cyclomatic complexity of functions
-    "godot",            # Check if comments end in a period
     "gofmt",            # Gofmt checks whether code was gofmt-ed
     "goimports",        # Checks unused imports
     "golint",           # Golint prints out style mistakes
@@ -37,7 +36,6 @@
     "unconvert",        # Detects unnecessary type conversions
     "unparam",          # Reports unused function parameters
     "whitespace",       # Detects leading and trailing whitespaces
-    "wrapcheck",        # Checks that errors returned from external packages are wrapped
   ]
 
 [linters-settings]

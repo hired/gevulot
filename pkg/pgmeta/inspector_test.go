@@ -12,6 +12,7 @@ import (
 
 var DatabaseURL = os.Getenv("DATABASE_URL")
 
+// nolint:gochecknoinits
 func init() {
 	if DatabaseURL == "" {
 		panic("no DATABASE_URL specified")

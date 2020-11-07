@@ -6,12 +6,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/hired/gevulot/pkg/server"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/alecthomas/kingpin.v2"
+
+	"github.com/hired/gevulot/pkg/server"
 )
 
-// Application name to display in help
+// Application name to display in help.
 const appName = "gevulot"
 
 // Build information; provisioned by ldflags

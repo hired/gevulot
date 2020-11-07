@@ -7,8 +7,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hired/gevulot/pkg/server"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/hired/gevulot/pkg/server"
 )
 
 func mockedCli(stdout, stderr io.Writer) *cli {

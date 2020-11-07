@@ -1,3 +1,4 @@
+//nolint:dupl
 package pg
 
 // NoticeResponseMessageType identifies NoticeResponseMessageType message.
@@ -12,7 +13,7 @@ type NoticeResponseMessage struct {
 // Compile time check to make sure that NoticeResponseMessage implements the Message interface.
 var _ Message = &NoticeResponseMessage{}
 
-// PnoticerrorResponseMessage parses NoticeResponseMessage from a network frame
+// PnoticerrorResponseMessage parses NoticeResponseMessage from a network frame.
 func ParseNoticeResponseMessage(frame Frame) (*NoticeResponseMessage, error) {
 	// Assert the message type
 	if frame.MessageType() != NoticeResponseMessageType {

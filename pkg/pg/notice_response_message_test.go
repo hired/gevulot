@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// nolint:gocritic
 // Real notice message packet from pg captured with Wireshark
 //   Severity (localized): WARNING
 //   Severity: WARNING

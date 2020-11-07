@@ -1,3 +1,4 @@
+//nolint:dupl
 package pg
 
 // ErrorResponseMessageType identifies ErrorResponseMessageType message.
@@ -12,7 +13,7 @@ type ErrorResponseMessage struct {
 // Compile time check to make sure that ErrorResponseMessage implements the Message interface.
 var _ Message = &ErrorResponseMessage{}
 
-// ParseErrorResponseMessage parses ErrorResponseMessage from a network frame
+// ParseErrorResponseMessage parses ErrorResponseMessage from a network frame.
 func ParseErrorResponseMessage(frame Frame) (*ErrorResponseMessage, error) {
 	// Assert the message type
 	if frame.MessageType() != ErrorResponseMessageType {

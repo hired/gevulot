@@ -50,7 +50,7 @@ var (
 	ErrunsupportedAuthenticationRequest = errors.New("pg: unsupported auth request from a backend")
 )
 
-// All valid auth status codes
+// All valid auth status codes.
 const (
 	authStatusCodeOk                = 0
 	authStatusCodeKerberosV5        = 2
@@ -62,7 +62,7 @@ const (
 	authStatusCodeSSPI              = 9
 )
 
-// Mapping between status code and implementation of AuthenticationRequestMessage
+// Mapping between status code and implementation of AuthenticationRequestMessage.
 var authStatusMap = map[int32]reflect.Type{ //nolint:gocheckboglobals
 	authStatusCodeOk:                reflect.TypeOf(AuthenticationOkMessage{}),
 	authStatusCodeKerberosV5:        reflect.TypeOf(AuthenticationKerberosV5Message{}),

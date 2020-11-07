@@ -13,6 +13,7 @@ type MessageField struct {
 // Here are all known codes fo protocol v3: https://www.postgresql.org/docs/9.6/protocol-error-fields.html
 type MessageFieldType byte
 
+// nolint:lll
 const (
 	// Severity: the field contents are ERROR, FATAL, or PANIC (in an error message), or WARNING, NOTICE, DEBUG, INFO, or LOG (in a notice message), or a localized translation of one of these. Always present.
 	MessageFieldSeverityLocalized MessageFieldType = 'S'
