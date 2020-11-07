@@ -6,8 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hired/gevulot/pkg/server"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/hired/gevulot/pkg/server"
 )
 
 func TestWatchServerConfig(t *testing.T) {

@@ -156,11 +156,12 @@ func (srv *Server) Serve(ln net.Listener) error {
 			}
 
 			// Continue after temporary errors
-			if ne, ok := err.(net.Error); ok && ne.Temporary() {
+			var ne net.Error
+			if errors.As(err, &ne) && ne.Temporary() {
 				continue
 			}
 
-			// ...otherwise stop the loop (most likely listner is closed)
+			// ...otherwise stop the loop (most likely listener is closed)
 			return err
 		}
 

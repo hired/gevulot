@@ -10,24 +10,25 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var DatabaseURL = os.Getenv("DATABASE_URL")
+// nolint:gochecknoglobals
+var databaseURL = os.Getenv("DATABASE_URL")
 
 // nolint:gochecknoinits
 func init() {
-	if DatabaseURL == "" {
+	if databaseURL == "" {
 		panic("no DATABASE_URL specified")
 	}
 }
 
 func TestInspectorDatabaseName(t *testing.T) {
 	// Extract db name from the DSN
-	url, err := url.Parse(DatabaseURL)
+	url, err := url.Parse(databaseURL)
 	require.NoError(t, err)
 
 	databaseName := strings.TrimLeft(url.Path, "/")
 	require.NotEmpty(t, databaseName)
 
-	inspector, err := Inspect(DatabaseURL)
+	inspector, err := Inspect(databaseURL)
 	require.NoError(t, err)
 
 	defer inspector.Close()
@@ -39,7 +40,7 @@ func TestInspectorDatabaseName(t *testing.T) {
 }
 
 func TestInspectorOIDTableMapping(t *testing.T) {
-	inspector, err := Inspect(DatabaseURL)
+	inspector, err := Inspect(databaseURL)
 	require.NoError(t, err)
 
 	defer inspector.Close()
@@ -64,7 +65,7 @@ func TestInspectorOIDTableMapping(t *testing.T) {
 }
 
 func TestInspectorClose(t *testing.T) {
-	inspector, err := Inspect(DatabaseURL)
+	inspector, err := Inspect(databaseURL)
 	require.NoError(t, err)
 
 	err = inspector.Close()

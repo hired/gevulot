@@ -11,6 +11,7 @@ const GoldenAuthenticationCleartextPasswordMessagePacket = "\x52\x00\x00\x00\x08
 
 // Real MD5 password request message packet from pg captured with Wireshark
 // Salt: 8f012d4c
+//nolint:gosec
 const GoldenAuthenticationMD5PasswordMessagePacket = "\x52\x00\x00\x00\x0c\x00\x00\x00\x05\x8f\x01\x2d\x4c"
 
 // Real auth ok message packet from pg captured with Wireshark

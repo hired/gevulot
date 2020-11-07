@@ -1,8 +1,9 @@
 package cli
 
 import (
-	"github.com/hired/gevulot/pkg/server"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/hired/gevulot/pkg/server"
 )
 
 // watchServerConfig watches for the config file and sends updated config to the given channel.

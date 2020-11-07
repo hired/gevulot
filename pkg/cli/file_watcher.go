@@ -31,6 +31,7 @@ func newFileWatcher(path string) *fileWatcher {
 }
 
 // Watch starts watching for the file changes on the disk.
+// nolint:gocognit
 func (w *fileWatcher) Watch() error {
 	// We have 2 nested goroutines in this function.
 	// We use watcherError variable to pull any errors from them into the calling gorouting.
@@ -109,7 +110,7 @@ func (w *fileWatcher) Watch() error {
 		}()
 
 		// Start the watcher
-		watcher.Add(w.Path)
+		watcherError = watcher.Add(w.Path)
 
 		// Exit from Watch
 		initWG.Done()
