@@ -9,7 +9,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/hired/gevulot/pkg/dispatcher"
 	"github.com/hired/gevulot/pkg/pg"
 )
 
