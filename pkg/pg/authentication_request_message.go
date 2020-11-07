@@ -63,7 +63,7 @@ const (
 )
 
 // Mapping between status code and implementation of AuthenticationRequestMessage.
-var authStatusMap = map[int32]reflect.Type{ //nolint:gocheckboglobals
+var authStatusMap = map[int32]reflect.Type{ //nolint:gochecknoglobals
 	authStatusCodeOk:                reflect.TypeOf(AuthenticationOkMessage{}),
 	authStatusCodeKerberosV5:        reflect.TypeOf(AuthenticationKerberosV5Message{}),
 	authStatusCodeCleartextPassword: reflect.TypeOf(AuthenticationCleartextPasswordMessage{}),
