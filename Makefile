@@ -12,11 +12,13 @@ ifdef VERBOSE
 	TEST_FLAGS += -v
 endif
 
+# Test database name
+PGDATABASE ?= gevulot_test
+
 default: build
 
 prepare-test-db:
-	createdb gevulot_test || exit 0
-	psql gevulot_test -f scripts/gevulot_test_schema.sql
+	psql $(PGDATABASE) -f scripts/gevulot_test_schema.sql
 
 test:
 	go test $(TEST_FLAGS) ./pkg/...
