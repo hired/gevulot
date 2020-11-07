@@ -35,7 +35,7 @@ func Inspect(dsn string) (*Inspector, error) {
 
 	if err != nil {
 		db.Close()
-		return nil, fmt.Errorf("inspector: error connecting to the database: %s", err)
+		return nil, fmt.Errorf("inspector: error connecting to the database: %w", err)
 	}
 
 	return &Inspector{db: db}, nil

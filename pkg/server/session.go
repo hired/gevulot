@@ -6,9 +6,11 @@ import (
 	"net"
 	"sync"
 
-	"github.com/hired/gevulot/pkg/pg"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/hired/gevulot/pkg/dispatcher"
+	"github.com/hired/gevulot/pkg/pg"
 )
 
 // Session represents a proxied PostgreSQL database session.
