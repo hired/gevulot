@@ -33,13 +33,11 @@
     "nolintlint",       # Reports ill-formed or insufficient nolint directives
     "scopelint",        # Checks for unpinned variables in go programs
     "stylecheck",       # Checks coding style
-    "testpackage",      # Forces usage of a separate _test package
     "tparallel",        # Detects inappropriate usage of t.Parallel() method
     "unconvert",        # Detects unnecessary type conversions
     "unparam",          # Reports unused function parameters
     "whitespace",       # Detects leading and trailing whitespaces
     "wrapcheck",        # Checks that errors returned from external packages are wrapped
-    "wsl",              # Forces usage of empty lines
   ]
 
 [linters-settings]
