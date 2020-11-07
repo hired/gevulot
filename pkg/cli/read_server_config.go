@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 
 	"github.com/BurntSushi/toml"
+
 	"github.com/hired/gevulot/pkg/server"
 )
 
