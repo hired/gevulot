@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,7 +34,6 @@ func TestConfigDistributorGet(t *testing.T) {
 	// Get() waits for initial config indefinitely
 	callGet()
 
-	fmt.Printf("waits for config\n")
 	select {
 	case <-resultCh:
 		assert.FailNow(t, "Get() returned before config became available")

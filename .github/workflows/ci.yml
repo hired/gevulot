@@ -18,14 +18,16 @@ jobs:
           go-version: '^1.15'
       - run: make prepare-test-db
       - run: make test VERBOSE=1
+    env:
+      PGHOST: postgres
+      PGUSER: gevulot
 
     services:
       postgres:
         image: postgres
-        ports:
-          - 5432:5432
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_USER: gevulot
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
