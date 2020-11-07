@@ -1,58 +1,32 @@
 package pgmeta
 
 import (
-	"fmt"
+	"net/url"
 	"os"
-	"os/user"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-var pgUser, pgHost, pgPort, pgDatabase, dsn string
+var DatabaseURL = os.Getenv("DATABASE_URL")
 
 func init() {
-	// Postgresql username
-	pgUser = os.Getenv("PGUSER")
-
-	if pgUser == "" {
-		osUser, err := user.Current()
-
-		if err != nil {
-			panic(err)
-		}
-
-		pgUser = osUser.Username
+	if DatabaseURL == "" {
+		panic("no DATABASE_URL specified")
 	}
-
-	// Postgresql hostname
-	pgHost = os.Getenv("PGHOST")
-
-	if pgHost == "" {
-		pgHost = "localhost"
-	}
-
-	// Postgresql port
-	pgPort = os.Getenv("PGPORT")
-
-	if pgPort == "" {
-		pgPort = "5432"
-	}
-
-	// Name of the database we created for testing purposes (see Makefile).
-	pgDatabase = os.Getenv("PGDATABASE")
-
-	if pgDatabase == "" {
-		pgDatabase = "gevolut_test"
-	}
-
-	// Format DSN for the inspector
-	dsn = fmt.Sprintf("postgresql://%s@%s:%s/%s?sslmode=disable", pgUser, pgHost, pgPort, pgDatabase)
 }
 
 func TestInspectorDatabaseName(t *testing.T) {
-	inspector, err := Inspect(dsn)
+	// Extract db name from the DSN
+	url, err := url.Parse(DatabaseURL)
+	require.NoError(t, err)
+
+	databaseName := strings.TrimLeft(url.Path, "/")
+	require.NotEmpty(t, databaseName)
+
+	inspector, err := Inspect(DatabaseURL)
 	require.NoError(t, err)
 
 	defer inspector.Close()
@@ -60,11 +34,11 @@ func TestInspectorDatabaseName(t *testing.T) {
 	name, err := inspector.DatabaseName()
 	require.NoError(t, err)
 
-	assert.Equal(t, pgDatabase, name)
+	assert.Equal(t, name, databaseName)
 }
 
 func TestInspectorOIDTableMapping(t *testing.T) {
-	inspector, err := Inspect(dsn)
+	inspector, err := Inspect(DatabaseURL)
 	require.NoError(t, err)
 
 	defer inspector.Close()
@@ -89,7 +63,7 @@ func TestInspectorOIDTableMapping(t *testing.T) {
 }
 
 func TestInspectorClose(t *testing.T) {
-	inspector, err := Inspect(dsn)
+	inspector, err := Inspect(DatabaseURL)
 	require.NoError(t, err)
 
 	err = inspector.Close()

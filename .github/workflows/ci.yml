@@ -19,9 +19,7 @@ jobs:
       - run: make prepare-test-db
       - run: make test VERBOSE=1
     env:
-      PGHOST: postgres
-      PGUSER: gevulot
-      PGDATABASE: gevulot_test
+      DATABASE_URL: postgresql://gevulot@localhost/gevulot_test?sslmode=disable
 
     services:
       postgres:

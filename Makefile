@@ -12,16 +12,16 @@ ifdef VERBOSE
 	TEST_FLAGS += -v
 endif
 
-# Test database name
-PGDATABASE ?= gevulot_test
+# Test database connection string
+DATABASE_URL ?= postgresql:///gevulot_test?sslmode=disable
 
 default: build
 
 prepare-test-db:
-	psql $(PGDATABASE) -f scripts/gevulot_test_schema.sql
+	psql $(DATABASE_URL) -f scripts/gevulot_test_schema.sql
 
 test:
-	go test $(TEST_FLAGS) ./pkg/...
+	DATABASE_URL=$(DATABASE_URL) go test $(TEST_FLAGS) ./pkg/...
 
 build: clean
 	go build -ldflags "$(LDFLAGS)" -o $(OUT) .
