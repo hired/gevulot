@@ -1,5 +1,7 @@
 # Gevulot — a PostgreSQL proxy for masking sensitive data
 
+![image](docs/inop.png)
+
 > Gvulot (Hebrew: גְּבוּלוֹת, lit. "Borders")
 
 Gevulot is a TCP proxy that sits between your PostgreSQL database and client and proxies data back and forth.
