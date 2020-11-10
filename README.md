@@ -1,6 +1,6 @@
-# Gevulot — a PostgreSQL proxy for masking sensitive data
-
 ![image](docs/inop.png)
+
+# Gevulot — a PostgreSQL proxy for masking sensitive data
 
 > Gvulot (Hebrew: גְּבוּלוֹת, lit. "Borders")
 
